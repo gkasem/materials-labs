@@ -108,6 +108,44 @@ select:hover,.btn:hover{border-color:var(--line2)}
 .hint{font-size:12px;color:var(--muted);margin:0}
 kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line2);border-bottom-width:2px;border-radius:3px;padding:0 4px;color:var(--ink)}
 button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ch{margin:0 0 10px;font-family:var(--display);font-size:15px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.ch span{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 8px;font-size:12.5px;align-items:center}
+.opt input{grid-column:1/-1;width:100%;accent-color:var(--accent);margin:0}
+.opt output{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.opt2{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px}
+.opt2 select,.opt2 .btn{width:132px;padding:5px 8px;font-size:12.5px;justify-content:center}
+.gvleg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.gvleg i{flex:1;height:6px;border-radius:3px;background:linear-gradient(90deg,#440154,#3b528b,#21918c,#5ec962,#fde725)}
+.gvleg i.hue{background:linear-gradient(90deg,#fa3232,#fafa32,#32fa32,#32fafa,#3232fa,#fa32fa,#fa3232)}
+.splist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
+.sprow{font:inherit;display:grid;grid-template-columns:8px minmax(0,1fr) auto;gap:6px;align-items:center;padding:4px 6px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--ink);font-size:12px;cursor:pointer;text-align:left;min-width:0}
+.sprow:hover{border-color:var(--line2)}
+.sprow .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sprow .ct{font-family:var(--mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sprow[aria-pressed="true"]{border-color:var(--accent);background:var(--sel)}
+.sprow.zero .nm,.sprow.zero .dot{opacity:.4}
+.sprow .dot{width:8px;height:8px;border-radius:50%}
+.spdetail{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.sphead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13.5px;flex-wrap:wrap}
+.sphead span{font-family:var(--mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+#spchart{width:100%;height:64px;display:block;background:var(--panel2);border-radius:4px}
+.traits{display:flex;flex-direction:column;gap:6px;margin:0}
+.tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 8px;font-size:12px;align-items:center}
+.tr dt{color:var(--ink)}
+.tr dd{margin:0;font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.tr .tb{grid-column:1/-1;position:relative;height:5px;background:var(--line);border-radius:3px}
+.tr .tb i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:3px}
+.tr .tb b{position:absolute;top:-2px;bottom:-2px;width:2px;margin-left:-1px;background:var(--ink);opacity:.55}
+.evo h4{margin:12px 0 6px;font-size:11.5px;color:var(--muted);font-weight:600;letter-spacing:.06em}
+.evlog{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto}
+.evlog li{display:grid;grid-template-columns:auto 8px minmax(0,1fr);gap:7px;font-size:12px;line-height:1.45;align-items:baseline}
+.evlog time{font-family:var(--mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.evlog .dot{width:7px;height:7px;border-radius:50%;align-self:center}
+.evlog .empty{display:block;color:var(--muted)}
+.below{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;align-items:start;margin-top:4px}
+@media (max-width:1100px){.below{grid-template-columns:minmax(0,1fr)}}
 .mo{display:none}
 .scrim{position:fixed;inset:0;background:rgba(4,8,10,.6);z-index:19}
 .dock{flex-direction:column;gap:8px}
@@ -170,6 +208,8 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   .side{position:fixed;left:0;right:0;bottom:0;max-height:76%;overflow-y:auto;z-index:20;background:var(--bg);border-top:1px solid var(--line2);border-radius:14px 14px 0 0;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));transform:translateY(105%);transition:transform .25s ease;visibility:hidden}
   .side.open{transform:none;visibility:visible}
   .side .palette{display:none}
+  .below{display:none}
+  .splist{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (prefers-reduced-motion:reduce){.flash{display:none}.prow .bar i,.side{transition:none}}
 </style>
@@ -190,11 +230,12 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <option value="volcano">ภูเขาไฟปะทุ</option>
         <option value="concrete">โรงหล่อคอนกรีต</option>
         <option value="electric">วงจรไฟฟ้า</option>
+        <option value="evo">ห้องทดลองวิวัฒนาการ</option>
         <option value="chem">ห้องเคมี</option>
         <option value="zerog">สถานีไร้แรงโน้มถ่วง</option>
         <option value="blank">ห้องว่าง</option>
       </select>
-      <button type="button" class="btn mo" id="infob">ข้อมูล</button>
+      <button type="button" class="btn mo" id="infob">ตัวเลือก</button>
     </div>
   </header>
 
@@ -257,13 +298,38 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <div class="tabs" id="tabs" role="tablist" aria-label="หมวดวัสดุ"></div>
         <div class="tray" id="tray"></div>
       </div>
+      <div class="below" id="below">
+      <div class="card evo" id="evo">
+        <h3 class="ch">วิวัฒนาการ <span id="evtime">เวลาจำลอง 00:00</span></h3>
+        <div class="splist" id="splist"></div>
+        <div class="spdetail">
+          <div class="sphead"><b id="spname">ปลา</b><span id="spmeta">ประชากร 0 · รุ่นสูงสุด 0</span></div>
+          <canvas id="spchart" height="64" aria-label="กราฟประชากรตามเวลา"></canvas>
+          <dl class="traits" id="traits"></dl>
+        </div>
+        <h4>เหตุการณ์วิวัฒนาการ</h4>
+        <ol class="evlog" id="evlog"></ol>
+      </div>
+      <div class="card opts" id="opts">
+        <h3 class="ch">ตัวเลือกการทดลอง</h3>
+        <div class="opt"><label for="o-amb">อุณหภูมิแวดล้อม</label><output id="o-ambv">20°C</output><input type="range" id="o-amb" min="-40" max="80" value="20"></div>
+        <div class="opt"><label for="o-sun">แสงแดด</label><output id="o-sunv">100%</output><input type="range" id="o-sun" min="0" max="200" step="10" value="100"></div>
+        <div class="opt"><label for="o-cap">ประชากรสูงสุดต่อชนิด</label><output id="o-capv">220</output><input type="range" id="o-cap" min="40" max="600" step="20" value="220"></div>
+        <div class="opt"><label for="o-heat">แท่งให้ความร้อน</label><output id="o-heatv">110°C</output><input type="range" id="o-heat" min="30" max="300" step="5" value="110"></div>
+        <div class="opt2"><label for="o-mut">อัตรากลายพันธุ์</label><select id="o-mut"><option value="0">ปิด</option><option value="0.5">ต่ำ</option><option value="1" selected>ปกติ</option><option value="2">สูง</option><option value="4">สุดขีด</option></select></div>
+        <div class="opt2"><label for="o-wx">สภาพอากาศ</label><select id="o-wx"><option value="0">ปลอดโปร่ง</option><option value="1">ฝน</option><option value="2">ฝนกรด</option><option value="3">หิมะ</option><option value="4">โปรยเมล็ดพืช</option><option value="5">ฝนอุกกาบาต</option></select></div>
+        <div class="opt2"><label for="o-day">กลางวัน–กลางคืน</label><button type="button" class="btn" id="o-day" aria-pressed="false">ปิดอยู่</button></div>
+        <div class="opt2"><label for="o-gv">มุมมองยีน</label><select id="o-gv"><option value="0">สีปกติ</option><option value="1">ทนร้อน</option><option value="2">ทนหนาว</option><option value="3">ต้านสารเคมี</option><option value="4">ปอด/เหงือก</option><option value="5">ความเร็ว</option><option value="6">สายตระกูล</option></select></div>
+        <div class="gvleg" id="gvleg" hidden><span id="gvlo">ต่ำ</span><i id="gvbar"></i><span id="gvhi">สูง</span></div>
+      </div>
+      </div>
       <p class="hint dk">คลิกหรือแตะค้างเพื่อเท · <kbd>Space</kbd> หยุด/เล่น · <kbd>T</kbd> มุมมองอุณหภูมิ · <kbd>G</kbd> สลับแรงโน้มถ่วง · <kbd>[</kbd> <kbd>]</kbd> ขนาดแปรง</p>
     </section>
 
     <aside class="side" id="side">
       <div class="mo" style="flex-direction:column;gap:4px">
         <div class="grip"></div>
-        <div class="sheethead"><h3>ข้อมูลการทดลอง</h3><button type="button" class="btn" id="sheetclose">ปิด</button></div>
+        <div class="sheethead"><h3>ตัวเลือกและวิวัฒนาการ</h3><button type="button" class="btn" id="sheetclose">ปิด</button></div>
       </div>
       <div class="card" id="selcard">
         <div class="selhead">
@@ -277,7 +343,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <dl class="facts" id="selfacts"></dl>
       </div>
       <div class="card palette" id="palette"></div>
-      <div class="card pops" id="pops"><h3>ประชากรสิ่งมีชีวิต</h3></div>
     </aside>
   </div>
   <div class="scrim" id="scrim" hidden></div>
@@ -292,9 +357,11 @@ if(PORTRAIT){const r=document.querySelector(".tankwrap").getBoundingClientRect()
 const W=PORTRAIT?120:220,H=PORTRAIT?PH:140,N=W*H;
 const type=new Uint8Array(N),temp=new Float32Array(N),life=new Int16Array(N),aux=new Int16Array(N),vary=new Uint8Array(N),clk=new Uint8Array(N),charge=new Uint8Array(N),dirA=new Int8Array(N);
 
+const GN=8,G_HOT=0,G_COLD=1,G_CHEM=2,G_LUNG=3,G_SPD=4,G_FERT=5,G_EFF=6,G_HUE=7;
+const gene=new Uint8Array(N*GN),gen=new Uint16Array(N);
 const EMPTY=0,WALL=1,SAND=2,WATER=3,FIRE=4,OIL=5,WOOD=6,PLANT=7,LAVA=8,STONE=9,ICE=10,STEAM=11,SMOKE=12,SALT=13,SALTW=14,ACID=15,GUNP=16,METAL=17,GLASS=18,SNOW=19,DIRT=20,SEED=21,METHANE=22,COAL=23,ASH=24,CEMENT=25,WETCON=26,CONCRETE=27,LN2=28,MUD=29,HONEY=30,FLOWER=31,REMAINS=32,VOID=33,BATTERY=34,ELEC=35;
-const FISH=40,ANT=41,BIRD=42,WORM=43,BEE=44,FROG=45;
-const MERCURY=60,NITRO=61,THERMITE=62,MOLTEN=63,GOLD=64,CLAY=65,BRICK=66,GRAVEL=67,SPONGE=68,RUST=69,HYDROGEN=70,DRYICE=71,CO2=72,SODA=73,VINEGAR=74,FOAM=75,WAX=76,LWAX=77,URANIUM=78,PLASMA=79,CLONE=80,MOSS=81,SUGAR=82,CARAMEL=83;
+const FISH=40,ANT=41,BIRD=42,WORM=43,BEE=44,FROG=45,MICROBE=46,ALGAE=47,PIKE=48,SNAKE=49,SPIDER=50,MOUSE=51,CRAB=52,MUDSKIP=53,THERMO=54;
+const MERCURY=60,NITRO=61,THERMITE=62,MOLTEN=63,GOLD=64,CLAY=65,BRICK=66,GRAVEL=67,SPONGE=68,RUST=69,HYDROGEN=70,DRYICE=71,CO2=72,SODA=73,VINEGAR=74,FOAM=75,WAX=76,LWAX=77,URANIUM=78,PLASMA=79,CLONE=80,MOSS=81,SUGAR=82,CARAMEL=83,WEB=84,HEATER=85,COOLER=86;
 const T_ERASE=120,T_HEAT=121,T_COOL=122,T_SPARK=123;
 const S_SOLID=1,S_POWDER=2,S_LIQUID=3,S_GAS=4,S_FIRE=5,S_LIFE=6;
 const WCL=1500;
@@ -337,7 +404,7 @@ def(REMAINS,"ซาก",S_POWDER,[140,108,96],{d:13,k:.12,ign:300,v:14,desc:"ซ
 def(VOID,"หลุมดำ",S_SOLID,[14,6,24],{k:0,v:4,desc:"ดูดทุกอย่างที่สัมผัสให้หายไป ยกเว้นกำแพง"});
 def(BATTERY,"แบตเตอรี่",S_SOLID,[214,172,40],{k:.02,v:4,desc:"ปล่อยพัลส์ไฟฟ้าเข้าโลหะ น้ำ หรือโคลนที่ติดกันเป็นจังหวะ"});
 def(ELEC,"ไฟฟ้า",S_FIRE,[214,236,255],{d:.1,k:.5,desc:"ปล่อยกระแสไฟฟ้า วิ่งผ่านโลหะ น้ำ น้ำเกลือ โคลน · จุดดินปืนและมีเทน · ทำให้ไม้ร้อน · ช็อตสิ่งมีชีวิตที่สัมผัสตัวนำ"});
-def(FISH,"ปลา",S_LIFE,[255,150,64],{d:10.5,k:.2,desc:"ว่ายในน้ำ กินพืชน้ำ ซาก มด ไส้เดือน · ขึ้นบกนานจะตาย · น้ำร้อนเกิน 42°C หรือเย็นเป็นน้ำแข็งตาย · ขยายพันธุ์ในน้ำ"});
+def(FISH,"ปลา",S_LIFE,[255,150,64],{d:10.5,k:.2,desc:"ว่ายในน้ำ กินสาหร่าย จุลินทรีย์ พืชน้ำ ซาก มด ไส้เดือน · ถ้ายีนปอดสูงถึงเกณฑ์จะวิวัฒนาการเป็นปลาตีน · ขึ้นบกนานจะตาย · น้ำร้อนเกิน 42°C หรือเย็นเป็นน้ำแข็งตาย · ขยายพันธุ์ในน้ำ"});
 def(ANT,"มด",S_LIFE,[206,86,58],{d:12,k:.2,desc:"เดินบนพื้น ปีนกำแพง ขุดดินและทราย · กินพืช เมล็ด น้ำผึ้ง ซาก · จมน้ำได้ · ตกลงตามแรงโน้มถ่วง"});
 def(BIRD,"นก",S_LIFE,[240,242,248],{d:5,k:.2,desc:"บินได้อิสระไม่สนแรงโน้มถ่วง · กินมด ไส้เดือน ผึ้ง เมล็ด · หลบไฟและลาวา"});
 def(WORM,"ไส้เดือน",S_LIFE,[240,138,160],{d:13,k:.2,desc:"ชอนไชในดิน ทราย โคลน · กินซากแล้วเปลี่ยนเป็นดินใหม่ · อยู่บนผิวดินนานจะตกลงมา"});
@@ -367,6 +434,18 @@ def(CLONE,"เครื่องโคลน",S_SOLID,[120,60,150],{k:0,v:6,desc
 def(MOSS,"ตะไคร่",S_SOLID,[70,124,52],{k:.1,ign:200,v:26,desc:"เติบโตเกาะผิวหิน ไม้ อิฐ คอนกรีต ใกล้น้ำโตเร็ว ที่แห้งโตช้ามาก · ปลากินได้ · ร้อนเกิน 50°C แห้งตาย"});
 def(SUGAR,"น้ำตาล",S_POWDER,[250,248,240],{d:13,v:6,desc:"ละลายหายในน้ำ · ร้อนเกิน 180°C กลายเป็นคาราเมล · มดชอบกิน"});
 def(CARAMEL,"คาราเมล",S_LIQUID,[172,98,30],{d:14,k:.2,t:190,v:8,desc:"น้ำตาลเคี่ยว หนืดมาก เย็นต่ำกว่า 60°C แข็งเป็นลูกอม · ร้อนเกิน 350°C ไหม้เป็นถ่าน"});
+def(MICROBE,"จุลินทรีย์",S_LIFE,[120,240,220],{d:10.5,k:.2,desc:"สิ่งมีชีวิตเซลล์เดียว อยู่ได้ในของเหลวทุกชนิด ทั้งน้ำ น้ำเกลือ โคลน น้ำมัน น้ำส้มสายชู และกรด · แบ่งตัวเร็วจึงวิวัฒนาการเร็วที่สุด · ย่อยซากแล้วปล่อยก๊าซมีเทน · ยีนการกินสูงพอจะย่อยน้ำมันได้ · ยีนทนร้อนสูงพอจะแยกเป็นแบคทีเรียทนร้อน"});
+def(THERMO,"แบคทีเรียทนร้อน",S_LIFE,[255,120,90],{d:10.5,k:.2,desc:"สายพันธุ์ที่วิวัฒนาการแยกออกมาจากจุลินทรีย์ อยู่ในน้ำร้อน 80–140°C ได้ เหมือนแบคทีเรียในบ่อน้ำพุร้อน"});
+def(ALGAE,"สาหร่าย",S_LIFE,[70,170,90],{d:10,k:.2,desc:"สังเคราะห์แสง ยิ่งใกล้ผิวน้ำยิ่งโตเร็ว (ปรับได้ที่ตัวเลือกแสงแดด) · เป็นอาหารของปลา ปู ปลาตีน · ยีนปอดสูงพอจะขึ้นมาเติบโตบนบกได้"});
+def(PIKE,"ปลาช่อน",S_LIFE,[124,138,60],{d:10.5,k:.2,desc:"นักล่าในน้ำ ไล่จับปลา ปลาตีน กบ · หายใจอากาศได้ จึงอยู่นอกน้ำได้นานกว่าปลาทั่วไป"});
+def(MUDSKIP,"ปลาตีน",S_LIFE,[160,138,90],{d:10.5,k:.2,desc:"สายพันธุ์ใหม่ที่วิวัฒนาการจากปลาที่ยีนปอดสูงถึงเกณฑ์ อยู่ได้ทั้งในน้ำและบนบก กระโดดจับมด ไส้เดือน แมงมุม"});
+def(CRAB,"ปู",S_LIFE,[232,88,58],{d:12,k:.2,desc:"สะเทินน้ำสะเทินบก เดินใต้น้ำได้ · กินซาก สาหร่าย จุลินทรีย์ ไส้เดือน · ขุดทรายได้"});
+def(SNAKE,"งู",S_LIFE,[184,194,74],{d:12,k:.2,desc:"นักล่าบนบก ล่ากบ หนู ปลาตีน นก · ว่ายน้ำได้ชั่วครู่"});
+def(SPIDER,"แมงมุม",S_LIFE,[150,116,134],{d:6,k:.2,desc:"ปีนกำแพงได้ ชักใยดักมดและผึ้ง แมลงที่ติดใยจะเคลื่อนที่ช้าลงมาก"});
+def(MOUSE,"หนู",S_LIFE,[176,168,168],{d:12,k:.2,desc:"กินเมล็ด พืช ดอกไม้ ตะไคร่ น้ำตาล น้ำผึ้ง · ขุดดินได้ ออกลูกเร็ว · เป็นเหยื่อของงู"});
+def(WEB,"ใยแมงมุม",S_SOLID,[214,220,228],{k:.05,ign:150,v:10,desc:"แมงมุมชักไว้ดักแมลง มดและผึ้งที่ติดใยจะขยับได้ช้า · ค่อยๆ ผุพังเอง · ไฟและกรดทำลายได้"});
+def(HEATER,"แท่งให้ความร้อน",S_SOLID,[206,70,44],{k:.6,cap:50,t:110,v:6,desc:"รักษาอุณหภูมิคงที่ตลอดเวลา (ตั้งค่าได้ที่ตัวเลือก ค่าเริ่มต้น 110°C) ใช้ทำบ่อน้ำร้อนหรือทดสอบความทนร้อนของสิ่งมีชีวิต"});
+def(COOLER,"แท่งความเย็น",S_SOLID,[64,146,224],{k:.6,cap:50,t:-30,v:6,desc:"รักษาอุณหภูมิ -30°C ตลอดเวลา ใช้ทำบ่อน้ำเย็นจัดเพื่อคัดเลือกสิ่งมีชีวิตที่ทนหนาว"});
 def(T_ERASE,"ยางลบ",0,[60,70,80],{desc:"ลบวัสดุออกจากถังทดลอง"});
 def(T_HEAT,"ให้ความร้อน",0,[255,120,40],{desc:"เพิ่มอุณหภูมิ +14°C ต่อเฟรมตรงที่แปรงชี้ · ลองต้มน้ำ หลอมทราย จุดไม้ หรืออุ่นคอนกรีตสดให้บ่มเร็วขึ้น"});
 def(T_COOL,"ทำให้เย็น",0,[90,190,255],{desc:"ลดอุณหภูมิ -14°C ต่อเฟรม · ลองแช่แข็งน้ำ ทำให้ลาวาเป็นหิน หรือดับไฟ"});
@@ -374,10 +453,22 @@ def(T_SPARK,"ไฟฟ้า",0,[214,236,255],{desc:DESC[ELEC]});
 
 // lookup tables
 const mk=a=>{const u=new Uint8Array(128);a.forEach(t=>u[t]=1);return u;};
-const F_ANT=mk([PLANT,SEED,HONEY,REMAINS,FLOWER,SUGAR,CARAMEL]),F_FISH=mk([PLANT,REMAINS,ANT,WORM,BEE,SEED,MOSS]),F_BIRD=mk([ANT,WORM,SEED,BEE]),F_WORM=mk([REMAINS]),F_FROG=mk([ANT,BEE,WORM]);
-const DIG_ANT=mk([SAND,DIRT,SNOW,ASH,CLAY]),SOIL=mk([DIRT,MUD,SAND,ASH,CLAY]),SURF=mk([STONE,WOOD,BRICK,CONCRETE,WALL,DIRT,GRAVEL]);
+const F_ANT=mk([PLANT,SEED,HONEY,REMAINS,FLOWER,SUGAR,CARAMEL]),F_FISH=mk([PLANT,REMAINS,ANT,WORM,BEE,SEED,MOSS,MICROBE,ALGAE,THERMO]),F_BIRD=mk([ANT,WORM,SEED,BEE,SPIDER]),F_WORM=mk([REMAINS]),F_FROG=mk([ANT,BEE,WORM,SPIDER]);
+const F_PIKE=mk([FISH,MUDSKIP,FROG]),F_MUDSKIP=mk([ANT,WORM,SPIDER,ALGAE,MICROBE,REMAINS]),F_MICRO=mk([REMAINS,SUGAR,HONEY,CARAMEL]),F_SNAKE=mk([FROG,MOUSE,MUDSKIP,BIRD]),F_SPIDER=mk([ANT,BEE,WORM]),F_MOUSE=mk([SEED,PLANT,SUGAR,CARAMEL,HONEY,FLOWER,MOSS]),F_CRAB=mk([REMAINS,ALGAE,MICROBE,THERMO,WORM,SEED,MOSS]);
+const DIG_ANT=mk([SAND,DIRT,SNOW,ASH,CLAY]),DIG_CRAB=mk([SAND,MUD,ASH]),SOIL=mk([DIRT,MUD,SAND,ASH,CLAY]),SURF=mk([STONE,WOOD,BRICK,CONCRETE,WALL,DIRT,GRAVEL]),LIQOK=mk([WATER,SALTW,MUD,VINEGAR,HONEY,OIL,ACID]);
+const LIFE=[FISH,PIKE,MUDSKIP,CRAB,FROG,ALGAE,MICROBE,THERMO,ANT,SPIDER,WORM,MOUSE,SNAKE,BEE,BIRD];
+const SPHOT=new Float32Array(128),SPCOLD=new Float32Array(128),SPLUNG=new Uint8Array(128),SPHUE=new Uint8Array(128),SPCHEM=new Uint8Array(128),HAB=new Uint8Array(128);
+function sp(id,hot,cold,lung,hue,hab,chem){SPHOT[id]=hot;SPCOLD[id]=cold;SPLUNG[id]=lung;SPHUE[id]=hue;HAB[id]=hab;SPCHEM[id]=chem??40;}
+sp(FISH,42,-1,60,18,1);sp(PIKE,40,0,120,60,1);sp(MUDSKIP,46,0,205,40,2);sp(CRAB,48,-3,128,8,2);sp(FROG,50,-4,128,85,2);
+sp(ALGAE,45,-2,20,100,1);sp(MICROBE,50,-2,12,135,1,60);sp(THERMO,100,10,12,250,1,60);
+sp(ANT,60,-8,100,6,0);sp(SPIDER,60,-8,60,220,0);sp(WORM,55,-6,220,240,0);sp(MOUSE,58,-14,60,170,0);sp(SNAKE,58,-4,80,70,0);sp(BEE,58,-6,40,36,0);sp(BIRD,60,-12,0,190,0);
+const SPCOL={[FISH]:"#ff9c48",[PIKE]:"#8c9a46",[MUDSKIP]:"#b49a62",[CRAB]:"#ea5a3c",[FROG]:"#5fc44a",[ALGAE]:"#46aa5a",[MICROBE]:"#78f0dc",[THERMO]:"#ff785a",[ANT]:"#d4583a",[SPIDER]:"#9a7488",[WORM]:"#f28ca2",[MOUSE]:"#b0a8a8",[SNAKE]:"#b8c24a",[BEE]:"#fbd02c",[BIRD]:"#f3f5fa"};
+const WEATHERS=[null,[WATER,.002],[ACID,.0015],[SNOW,.003],[SEED,.0004],[LAVA,.00008]];
+let mutRate=1,popCap=220,ambient=20,sunOpt=1,dayNight=false,weather=0,geneView=0,heaterT=110,daylight=1,ambEff=20,sunEff=1;
+const maxGen=new Uint16Array(128),recHot=new Float32Array(128),recCold=new Float32Array(128),recChem=new Float32Array(128),recGen=new Uint16Array(128);
+const evlog=[],evOnce=new Set(),prevPop=new Int32Array(128);let evDirty=true;
+const HN=120,hist={};for(const t of LIFE)hist[t]=new Float32Array(HN);let histN=0,lastHist=0;
 const DX8=[-1,0,1,-1,1,-1,0,1],DY8=[-1,-1,-1,0,0,1,1,1],DX4=[1,-1,0,0],DY4=[0,0,1,-1];
-const POPCAP=220;
 const pop=new Int32Array(128),popc=new Int32Array(128);
 const rnd=Math.random;
 
@@ -387,9 +478,9 @@ let labels=[];
 
 function at(x,y){return (x<0||y<0||x>=W||y>=H)?-1:y*W+x;}
 function rn(x,y){const k=(rnd()*8)|0;return at(x+DX8[k],y+DY8[k]);}
-function initLife(t){switch(t){case FIRE:return 20+(rnd()*30|0);case SMOKE:return 60+(rnd()*100|0);case WOOD:return 50+(rnd()*30|0);case COAL:return 220;case WETCON:return WCL;case FOAM:return 280+(rnd()*60|0);case CO2:return 600+(rnd()*400|0);case PLASMA:return 8+(rnd()*18|0);case REMAINS:return 500+(rnd()*400|0);case ELEC:return 3;case FISH:case ANT:case BIRD:case WORM:case BEE:case FROG:return 220;default:return 0;}}
-function setCell(i,t,tp){type[i]=t;temp[i]=tp===undefined?BT[t]:tp;life[i]=initLife(t);aux[i]=0;dirA[i]=rnd()<.5?-1:1;charge[i]=0;vary[i]=(rnd()*256)|0;}
-function swap(i,j){let a=type[i];type[i]=type[j];type[j]=a;let f=temp[i];temp[i]=temp[j];temp[j]=f;a=life[i];life[i]=life[j];life[j]=a;a=aux[i];aux[i]=aux[j];aux[j]=a;a=vary[i];vary[i]=vary[j];vary[j]=a;a=dirA[i];dirA[i]=dirA[j];dirA[j]=a;a=charge[i];charge[i]=charge[j];charge[j]=a;clk[i]=stamp;clk[j]=stamp;}
+function initLife(t){switch(t){case FIRE:return 20+(rnd()*30|0);case SMOKE:return 60+(rnd()*100|0);case WOOD:return 50+(rnd()*30|0);case COAL:return 220;case WETCON:return WCL;case FOAM:return 280+(rnd()*60|0);case CO2:return 600+(rnd()*400|0);case PLASMA:return 8+(rnd()*18|0);case REMAINS:return 500+(rnd()*400|0);case ELEC:return 3;case WEB:return 300;default:return ST[t]===S_LIFE?220:0;}}
+function setCell(i,t,tp){type[i]=t;temp[i]=tp===undefined?BT[t]:tp;life[i]=initLife(t);aux[i]=0;dirA[i]=rnd()<.5?-1:1;charge[i]=0;vary[i]=(rnd()*256)|0;if(ST[t]===S_LIFE)seedGenes(i,t);}
+function swap(i,j){if(ST[type[i]]===S_LIFE||ST[type[j]]===S_LIFE){const p=i*GN,q=j*GN;for(let k=0;k<GN;k++){const z=gene[p+k];gene[p+k]=gene[q+k];gene[q+k]=z;}const z=gen[i];gen[i]=gen[j];gen[j]=z;}let a=type[i];type[i]=type[j];type[j]=a;let f=temp[i];temp[i]=temp[j];temp[j]=f;a=life[i];life[i]=life[j];life[j]=a;a=aux[i];aux[i]=aux[j];aux[j]=a;a=vary[i];vary[i]=vary[j];vary[j]=a;a=dirA[i];dirA[i]=dirA[j];dirA[j]=a;a=charge[i];charge[i]=charge[j];charge[j]=a;clk[i]=stamp;clk[j]=stamp;}
 function canEnter(j,d){const t=type[j];if(t===EMPTY)return true;const s=ST[t];return (s===S_LIQUID||s===S_GAS||s===S_FIRE)&&DEN[t]<d;}
 function isWater(t){return t===WATER||t===SALTW;}
 function isSupport(t){const s=ST[t];return s===S_SOLID||s===S_POWDER||s===S_LIFE;}
@@ -464,7 +555,7 @@ function burn(i,x,y,t){
       if(rnd()<(t===COAL?.3:.45))spawnFire(x,y,1);
       if(rnd()<.12){life[i]--;if(life[i]<=0){setCell(i,(t===WOOD&&rnd()<.35)?COAL:ASH,temp[i]);return true;}}
       return false;}
-    case PLANT:case FLOWER:case SEED:case MOSS:setCell(i,FIRE,800);life[i]=10+(rnd()*15|0);return true;
+    case PLANT:case FLOWER:case SEED:case MOSS:case WEB:setCell(i,FIRE,800);life[i]=10+(rnd()*15|0);return true;
     case REMAINS:setCell(i,rnd()<.5?FIRE:ASH,700);return true;
   }
   return false;
@@ -474,7 +565,7 @@ function explode(cx,cy,r){
   for(let dy=-r-2;dy<=r+2;dy++)for(let dx=-r-2;dx<=r+2;dx++){
     const d=Math.sqrt(dx*dx+dy*dy);if(d>r+2)continue;
     const j=at(cx+dx,cy+dy);if(j<0)continue;const t=type[j];
-    if(t===WALL||t===VOID||t===BATTERY||t===CLONE)continue;
+    if(t===WALL||t===VOID||t===BATTERY||t===CLONE||t===HEATER||t===COOLER)continue;
     if(d>r){temp[j]+=150;continue;}
     const f=d/r;
     if(t===CONCRETE||t===METAL||t===GOLD||t===BRICK){temp[j]+=200*(1-f);continue;}
@@ -488,31 +579,82 @@ function explode(cx,cy,r){
     if(k>=0&&type[k]===EMPTY)swap(j,k);
   }
 }
+// ---------- genetics ----------
+function seedGenes(i,t){
+  const g=i*GN,n=()=>((rnd()+rnd()+rnd()-1.5)*24)|0,c=v=>v<0?0:v>255?255:v;
+  gene[g]=c(128+n());gene[g+1]=c(128+n());gene[g+2]=c(SPCHEM[t]+n());gene[g+3]=c(SPLUNG[t]+(n()>>1));
+  gene[g+4]=c(128+n());gene[g+5]=c(128+n());gene[g+6]=c(128+n());gene[g+7]=(SPHUE[t]+(n()>>2))&255;gen[i]=0;
+}
+const mv=(v,a)=>{v+=Math.round((rnd()+rnd()-1)*a);return v<0?0:v>255?255:v;};
+const rint=(a,b)=>a+((rnd()*(b-a+1))|0);
+function capOf(t){return (t===MICROBE||t===THERMO||t===ALGAE)?popCap*2:popCap;}
+function spd(i){return rnd()*255<gene[i*GN+G_SPD]+90;}
+function effMul(i){return .6+gene[i*GN+G_EFF]/255*.8;}
+function fertMul(i){return .4+gene[i*GN+G_FERT]/255*1.2;}
+function lungAq(i){return 30+gene[i*GN+G_LUNG]*2.5;}
+function lungLand(i){return 60+gene[i*GN+G_LUNG]*2;}
+function hotLim(t,v){return SPHOT[t]+(v-128)*.35;}
+function coldLim(t,v){return SPCOLD[t]-(v-128)*.3;}
+function simTime(){const s=(frame/60)|0;return String((s/60)|0).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
+function logEvo(t,txt){evlog.unshift({t,txt,tm:simTime()});if(evlog.length>40)evlog.length=40;evDirty=true;}
+function logOnce(key,t,txt){if(evOnce.has(key))return;evOnce.add(key);logEvo(t,txt);}
+function resetEvo(){
+  evlog.length=0;evOnce.clear();evDirty=true;maxGen.fill(0);
+  for(const t of LIFE){recHot[t]=SPHOT[t]+10;recCold[t]=SPCOLD[t]-10;recChem[t]=SPCHEM[t]/255+.25;recGen[t]=25;hist[t].fill(0);prevPop[t]=0;}
+  histN=0;
+}
+function checkRec(j,t){
+  const b=j*GN,hot=hotLim(t,gene[b]),cold=coldLim(t,gene[b+1]),ch=gene[b+2]/255;
+  if(hot>=recHot[t]){logEvo(t,`${NAME[t]} รุ่นที่ ${gen[j]} ทนร้อนได้ถึง ${Math.round(hot)}°C`);recHot[t]=hot+4;}
+  if(cold<=recCold[t]){logEvo(t,`${NAME[t]} รุ่นที่ ${gen[j]} ทนหนาวได้ถึง ${Math.round(cold)}°C`);recCold[t]=cold-4;}
+  if(ch>=recChem[t]){logEvo(t,`${NAME[t]} รุ่นที่ ${gen[j]} ต้านทานกรดและสารพิษได้ ${Math.round(ch*100)}%`);recChem[t]=ch+.1;}
+  if(gen[j]>=recGen[t]){logEvo(t,`${NAME[t]} สืบทอดมาถึงรุ่นที่ ${gen[j]}`);recGen[t]+=recGen[t]<100?25:recGen[t]<400?100:200;}
+}
+function birth(i,j,t){
+  setCell(j,t,temp[i]);
+  const a=i*GN,b=j*GN,m=mutRate*14*(t===MICROBE||t===THERMO?1.6:1);
+  for(let k=0;k<GN;k++){let v=gene[a+k];if(m>0&&rnd()<.6)v=k===G_HUE?((v+Math.round((rnd()+rnd()-1)*m*.6))&255):mv(v,m);gene[b+k]=v;}
+  gen[j]=gen[i]+1;life[j]=110;pop[t]++;
+  if(t===FISH&&gene[b+G_LUNG]>=200){type[j]=MUDSKIP;t=MUDSKIP;gene[b+G_HUE]=(gene[b+G_HUE]+30)&255;pop[MUDSKIP]++;
+    logOnce("mudskip",MUDSKIP,`ปลารุ่นที่ ${gen[j]} มีปอดพัฒนาจนขึ้นบกได้ เกิดสายพันธุ์ใหม่ "ปลาตีน"`);}
+  else if(t===MICROBE&&gene[b]>=200){const lim=hotLim(MICROBE,gene[b]);type[j]=THERMO;t=THERMO;gene[b]=Math.max(0,Math.min(255,Math.round(128+(lim-SPHOT[THERMO])/.35)));pop[THERMO]++;
+    logOnce("thermo",THERMO,`จุลินทรีย์รุ่นที่ ${gen[j]} ทนร้อนจนแยกเป็นสายพันธุ์ใหม่ "แบคทีเรียทนร้อน"`);}
+  if(gen[j]>maxGen[t])maxGen[t]=gen[j];
+  checkRec(j,t);
+}
+
+// ---------- shared creature behaviour ----------
 function eat(i,x,y,food,gain,p,rep){
   const j=rn(x,y);if(j<0)return false;
-  if(food[type[j]]&&rnd()<p){setCell(j,rep===undefined?EMPTY:rep,temp[j]);life[i]=Math.min(life[i]+gain,420);return true;}
+  if(food[type[j]]&&rnd()<p){setCell(j,rep===undefined?EMPTY:rep,temp[j]);life[i]=Math.min(life[i]+gain*effMul(i),420);return true;}
   return false;
 }
 function repro(i,x,y,t,thr,p,target){
-  if(life[i]<thr||pop[t]>=POPCAP||rnd()>=p)return;
+  if(life[i]<thr||pop[t]>=capOf(t)||rnd()>=p*fertMul(i))return;
   const j=rn(x,y);if(j<0)return;const t2=type[j];
-  const ok=target===1?isWater(t2):target===2?(t2===DIRT||t2===MUD||t2===EMPTY):t2===EMPTY;
+  const ok=target===1?isWater(t2):target===2?(t2===DIRT||t2===MUD||t2===EMPTY):target===3?LIQOK[t2]===1:t2===EMPTY;
   if(!ok)return;
-  setCell(j,t,temp[i]);life[j]=110;life[i]-=150;pop[t]++;
+  birth(i,j,t);life[i]-=150;
 }
 function hazard(i,x,y,t){
-  const tp=temp[i];
-  const hot=t===FISH?42:60,cold=t===FISH?-1:-8;
-  if(tp>hot){setCell(i,tp>250?ASH:REMAINS,tp);return true;}
-  if(tp<cold){die(i);return true;}
+  const g=i*GN,tp=temp[i];
+  const hot=hotLim(t,gene[g]),cold=coldLim(t,gene[g+1]);
+  if(tp>hot&&(tp>hot+12||rnd()<.1)){setCell(i,tp>250?ASH:REMAINS,tp);return true;}
+  if(tp<cold&&(tp<cold-12||rnd()<.06)){die(i);return true;}
+  const ch=gene[g+2]/255,pk=.5*(1-ch)*(1-ch);
   let co=0;
   for(let k=0;k<8;k++){const j=at(x+DX8[k],y+DY8[k]);if(j<0)continue;const t2=type[j];
-    if(t2===ACID||t2===LAVA||t2===ELEC||t2===MERCURY||t2===PLASMA||t2===MOLTEN||charge[j]===2){die(i);return true;}
-    if(t2===CO2)co++;else if(t2===URANIUM&&rnd()<.02){die(i);return true;}}
-  if(co>=3){life[i]-=2;if(life[i]<=0){die(i);return true;}}
-  if(rnd()<.012){life[i]--;if(life[i]<=0){die(i);return true;}}
+    if(t2===LAVA||t2===ELEC||t2===PLASMA||t2===MOLTEN||charge[j]===2){die(i);return true;}
+    if(t2===ACID||t2===MERCURY){if(rnd()<pk){die(i);return true;}}
+    else if(t2===VINEGAR||t2===OIL){if(rnd()<pk*.00015){die(i);return true;}}
+    else if(t2===CO2)co++;
+    else if(t2===URANIUM&&rnd()<.03*(1-ch)){die(i);return true;}}
+  if(co>=3&&rnd()>ch){life[i]-=2;if(life[i]<=0){die(i);return true;}}
+  const cost=Math.max(.6,1+(Math.abs(gene[g]-128)+Math.abs(gene[g+1]-128)+gene[g+2]*.5+gene[g+4]*.35+gene[g+5]*.25-97)/420);
+  if(rnd()<.012*cost){life[i]--;if(life[i]<=0){die(i);return true;}}
   return false;
 }
+function stuck(x,y){return sameN(x,y,WEB)>0&&rnd()<.85;}
 
 // ---------- creatures ----------
 function walker(i,x,y,climb,dig){
@@ -524,33 +666,40 @@ function walker(i,x,y,climb,dig){
   const b=at(x+gx,y+gy);
   if(!cling&&b>=0&&canEnter(b,12.5)){swap(i,b);return;}
   if(rnd()<.008){dirA[i]=-d;return;}
+  const land=HAB[type[i]]===0;
+  if(land&&ST[fT]===S_LIQUID){dirA[i]=-d;return;}
   if(fT===EMPTY||ST[fT]===S_GAS){
     const fb=at(fx+gx,fy+gy);
     const sup=fb<0||!canEnter(fb,12.5);
-    if(sup||rnd()<.1){swap(i,f);return;}
+    if(land&&!sup){let wet=false;for(let k=1;k<=8;k++){const q=at(fx+gx*k,fy+gy*k);if(q<0)break;const tq=type[q];if(ST[tq]===S_LIQUID){wet=true;break;}if(tq!==EMPTY&&ST[tq]!==S_GAS)break;}if(wet){dirA[i]=-d;return;}}
+    if(sup||rnd()<(land?.04:.1)){swap(i,f);return;}
     dirA[i]=-d;return;
   }
-  if(dig&&dig[fT]&&rnd()<.03){swap(i,f);return;}
+  if(dig&&dig[fT]&&rnd()<.03){let wet=false;if(land)for(let k=0;k<8;k++){const q=at(fx+DX8[k],fy+DY8[k]);if(q>=0&&ST[type[q]]===S_LIQUID){wet=true;break;}}if(!wet){swap(i,f);return;}}
   const ud=at(fx-gx,fy-gy);if(ud>=0&&type[ud]===EMPTY&&rnd()<.7){swap(i,ud);return;}
   if(climb){const u=at(x-gx,y-gy);if(u>=0&&type[u]===EMPTY){swap(i,u);return;}}
   dirA[i]=-d;
 }
 function waterAround(x,y){let c=0;for(let k=0;k<4;k++){const j=at(x+DX4[k],y+DY4[k]);if(j>=0&&(isWater(type[j])||type[j]===HONEY))c++;}return c;}
+function breathe(i,x,y){if(waterAround(x,y)>=3){if(++aux[i]>lungLand(i)){die(i);return true;}}else if(aux[i]>0)aux[i]--;return false;}
+function seek(i,x,y,prey,r){for(let s=0;s<3;s++){const ox=rint(-r,r),oy=rint(-3,3);const j=at(x+ox,y+oy);if(j>=0&&prey[type[j]]){if(ox)dirA[i]=ox<0?-1:1;return oy;}}return 0;}
+function paddle(i,x,y){const k=(rnd()*8)|0;const j=at(x+DX8[k],y+DY8[k]);if(j>=0&&(isWater(type[j])||type[j]===EMPTY)&&rnd()<.5){if(DX8[k])dirA[i]=DX8[k];swap(i,j);}}
 function antUpdate(i,x,y){
-  if(waterAround(x,y)>=3){if(++aux[i]>260){die(i);return;}}else if(aux[i]>0)aux[i]--;
+  if(breathe(i,x,y))return;
+  if(stuck(x,y))return;
   if(rnd()<.45)return;
-  if(eat(i,x,y,F_ANT,45,.07))return;
-  repro(i,x,y,ANT,350,.008,0);
+  if(eat(i,x,y,F_ANT,50,.08))return;
+  repro(i,x,y,ANT,300,.012,0);
   walker(i,x,y,true,DIG_ANT);
 }
 function wormUpdate(i,x,y){
   let soil=0,wn=0;
   for(let k=0;k<4;k++){const j=at(x+DX4[k],y+DY4[k]);if(j<0){soil++;continue;}const t2=type[j];if(SOIL[t2])soil++;else if(isWater(t2))wn++;}
-  if(wn>=2){if(++aux[i]>500){die(i);return;}}else if(aux[i]>0)aux[i]--;
+  if(wn>=2){if(++aux[i]>lungLand(i)){die(i);return;}}else if(aux[i]>0)aux[i]--;
   if(soil===0&&!zeroG){const b=at(x+gx,y+gy);if(b>=0&&canEnter(b,13)){swap(i,b);return;}}
   if(rnd()<.55)return;
   if(eat(i,x,y,F_WORM,70,.25,DIRT))return;
-  if(soil>0&&rnd()<.008)life[i]=Math.min(life[i]+4,420);
+  if(soil>0&&rnd()<.02)life[i]=Math.min(life[i]+4,420);
   repro(i,x,y,WORM,340,.006,2);
   const k=rnd()<.6?(dirA[i]>0?0:1):((rnd()*4)|0);
   const j=at(x+DX4[k],y+DY4[k]);if(j<0){dirA[i]=-dirA[i];return;}
@@ -559,27 +708,65 @@ function wormUpdate(i,x,y){
   else if(t2===EMPTY&&soil>=2&&rnd()<.15)swap(i,j);
   else if(k<2)dirA[i]=-dirA[i];
 }
-function fishUpdate(i,x,y){
+function swim(i,x,y,t,food,gain,thr,rp,prey){
   let wn=0;for(let k=0;k<4;k++){const j=at(x+DX4[k],y+DY4[k]);if(j>=0&&isWater(type[j]))wn++;}
   if(wn===0){
-    if(++aux[i]>180){die(i);return;}
+    if(++aux[i]>lungAq(i)){die(i);return;}
     if(!zeroG){const b=at(x+gx,y+gy);if(b>=0&&canEnter(b,11)){swap(i,b);return;}}
     if(rnd()<.06){const j=at(x+(rnd()<.5?-1:1),y);if(j>=0&&type[j]===EMPTY)swap(i,j);}
     return;
   }
   aux[i]=0;
   if(rnd()<.45)return;
-  if(eat(i,x,y,F_FISH,35,.05))return;
-  repro(i,x,y,FISH,340,.007,1);
+  if(eat(i,x,y,food,gain,prey?.3:.03,prey?WATER:undefined))return;
+  repro(i,x,y,t,thr,rp,1);
   let d=dirA[i]||1;if(rnd()<.02)d=-d;
   let ty=y;const r=rnd();if(r<.15)ty--;else if(r<.3)ty++;
+  if(prey&&rnd()<.6){const oy=seek(i,x,y,prey,8);d=dirA[i]||d;if(oy)ty=y+Math.sign(oy);}
   const j=at(x+d,ty);
   if(j>=0&&isWater(type[j])){dirA[i]=d;swap(i,j);}else dirA[i]=-d;
 }
+function mudUpdate(i,x,y){
+  let wn=0;for(let k=0;k<8;k++){const j=at(x+DX8[k],y+DY8[k]);if(j>=0&&isWater(type[j]))wn++;}
+  if(wn>=3){aux[i]=0;swim(i,x,y,MUDSKIP,F_MUDSKIP,40,340,.006,null);return;}
+  if(wn>0)aux[i]=0;else if(++aux[i]>900){die(i);return;}
+  if(rnd()<.4)return;
+  if(eat(i,x,y,F_MUDSKIP,45,.2))return;
+  if(wn>0)repro(i,x,y,MUDSKIP,340,.006,1);
+  if(aux[i]>500){for(let s=0;s<3;s++){const ox=rint(-8,8);const j=at(x+ox,y+rint(-2,3));if(j>=0&&isWater(type[j])){dirA[i]=ox<0?-1:1;break;}}}
+  frogHop(i,x,y);
+}
+function microbeUpdate(i,x,y,t){
+  let liq=0;for(let k=0;k<4;k++){const j=at(x+DX4[k],y+DY4[k]);if(j>=0&&LIQOK[type[j]])liq++;}
+  if(liq===0){if(++aux[i]>lungAq(i)){die(i);return;}if(!zeroG){const b=at(x+gx,y+gy);if(b>=0&&canEnter(b,13))swap(i,b);}return;}
+  aux[i]=0;
+  const j=rn(x,y),ef=gene[i*GN+G_EFF];
+  if(j>=0){const t2=type[j];
+    if(F_MICRO[t2]&&rnd()<.12){const gas=t2===REMAINS&&rnd()<.12;setCell(j,gas?METHANE:WATER,temp[j]);life[i]=Math.min(420,life[i]+30*effMul(i));}
+    else if(t2===OIL&&ef>150&&rnd()<(ef-150)/105*.1){setCell(j,WATER,temp[j]);life[i]=Math.min(420,life[i]+25);logOnce("oil"+t,t,`${NAME[t]}วิวัฒนาการจนย่อยสลายน้ำมันได้ (รุ่นที่ ${gen[i]})`);}
+  }
+  if(rnd()<.07)life[i]=Math.min(420,life[i]+1);
+  if(life[i]>120&&pop[t]<capOf(t)&&rnd()<.03*fertMul(i)){const c=rn(x,y);if(c>=0&&LIQOK[type[c]]){const m=type[c];birth(i,c,t);life[c]=70;life[i]-=60;if(m===ACID)logOnce("acid"+t,t,`${NAME[t]}แบ่งตัวได้ในกรดเข้มข้น (รุ่นที่ ${gen[c]})`);}}
+  if(rnd()<.5){const k=(rnd()*8)|0;const m=at(x+DX8[k],y+DY8[k]);if(m>=0&&LIQOK[type[m]])swap(i,m);}
+}
+function algaeUpdate(i,x,y){
+  let wn=0;for(let k=0;k<4;k++){const j=at(x+DX4[k],y+DY4[k]);if(j>=0&&isWater(type[j]))wn++;}
+  if(wn===0){if(++aux[i]>lungAq(i)){die(i);return;}}else aux[i]=0;
+  let L=sunEff;
+  if(!zeroG){let d=0;for(let k=1;k<=24;k++){const j=at(x-gx*k,y-gy*k);if(j<0)break;const t2=type[j];if(t2===EMPTY||ST[t2]===S_GAS)break;if(!isWater(t2)&&ST[t2]!==S_LIFE){d=99;break;}d++;}L*=Math.max(0,1-d/24);}
+  else L*=.6;
+  if(rnd()<.1*L)life[i]=Math.min(420,life[i]+2*effMul(i));
+  if(life[i]>160&&pop[ALGAE]<capOf(ALGAE)&&rnd()<.03*fertMul(i)){
+    const k=(rnd()*8)|0,nx=x+DX8[k],ny=y+DY8[k],j=at(nx,ny);
+    if(j>=0){const t2=type[j];const land=t2===EMPTY&&gene[i*GN+G_LUNG]>170&&nearSurf(nx,ny);
+      if(isWater(t2)||land){birth(i,j,ALGAE);life[i]-=70;life[j]=80;if(land)logOnce("algaeland",ALGAE,`สาหร่ายรุ่นที่ ${gen[j]} วิวัฒนาการจนขึ้นมาเติบโตบนบกได้`);}}}
+  if(wn>0){if(rnd()<.04){const k=(rnd()*8)|0;const j=at(x+DX8[k],y+DY8[k]);if(j>=0&&isWater(type[j]))swap(i,j);}}
+  else if(!zeroG&&!nearSurf(x,y)){const b=at(x+gx,y+gy);if(b>=0&&canEnter(b,11))swap(i,b);}
+}
 function birdUpdate(i,x,y){
-  if(waterAround(x,y)>=2){if(++aux[i]>60){die(i);return;}}
+  if(waterAround(x,y)>=2){if(++aux[i]>lungLand(i)){die(i);return;}}
   if(rnd()<.35)return;
-  if(eat(i,x,y,F_BIRD,60,.3))return;
+  if(eat(i,x,y,F_BIRD,60,.05))return;
   repro(i,x,y,BIRD,360,.004,0);
   let d=dirA[i]||1;
   for(let k=2;k<=5;k++){const j=at(x+d*k,y);if(j<0){d=-d;break;}const t2=type[j];if(t2===FIRE||t2===LAVA){d=-d;break;}}
@@ -595,11 +782,12 @@ function birdUpdate(i,x,y){
 }
 function beeUpdate(i,x,y){
   if(waterAround(x,y)>=3&&rnd()<.02){die(i);return;}
+  if(stuck(x,y))return;
   if(rnd()<.3)return;
   for(let k=0;k<8;k++){const j=at(x+DX8[k],y+DY8[k]);if(j<0)continue;const t2=type[j];
-    if(t2===FLOWER){if(aux[i]<6&&rnd()<.06){aux[i]++;life[i]=Math.min(life[i]+14,420);}}
+    if(t2===FLOWER){if(aux[i]<6&&rnd()<.06){aux[i]++;life[i]=Math.min(life[i]+14*effMul(i),420);}}
     else if(t2===PLANT){if(aux[i]>0&&rnd()<.003){setCell(j,FLOWER,temp[j]);aux[i]--;}}
-    else if(t2===HONEY){if(life[i]>250&&pop[BEE]<POPCAP&&rnd()<.01){setCell(j,BEE,temp[j]);life[j]=140;life[i]-=110;pop[BEE]++;}}
+    else if(t2===HONEY){if(life[i]>250&&pop[BEE]<capOf(BEE)&&rnd()<.01*fertMul(i)){birth(i,j,BEE);life[j]=140;life[i]-=110;}}
     else if((t2===WOOD||t2===STONE||t2===WALL||t2===CONCRETE)&&aux[i]>=4&&rnd()<.02){const e=rn(x,y);if(e>=0&&type[e]===EMPTY){setCell(e,HONEY,temp[i]);aux[i]-=4;}}
   }
   if(aux[i]>0&&rnd()<.0012){const b=at(x,y+1);if(b>=0&&type[b]===EMPTY)setCell(b,SEED,temp[i]);}
@@ -609,22 +797,72 @@ function beeUpdate(i,x,y){
   const j=at(x+tx,y+ty);
   if(j>=0&&type[j]===EMPTY){if(tx)dirA[i]=tx;swap(i,j);}
 }
-function frogUpdate(i,x,y){
-  if(rnd()<.5)return;
-  let wn=0;for(let k=0;k<4;k++){const j=at(x+DX4[k],y+DY4[k]);if(j>=0&&isWater(type[j]))wn++;}
+function frogHop(i,x,y){
   const d=dirA[i]||1;
-  for(let pass=0;pass<2;pass++){const ddx=pass===0?d:0,ddy=pass===0?0:-1;
-    for(let k=1;k<=4;k++){const j=at(x+ddx*k,y+ddy*k);if(j<0)break;const t2=type[j];
-      if(F_FROG[t2]){if(rnd()<.35){setCell(j,EMPTY,temp[j]);life[i]=Math.min(life[i]+60,420);}return;}
-      if(t2!==EMPTY&&!isWater(t2))break;}}
-  if(wn>0)repro(i,x,y,FROG,330,.008,1);
-  if(wn>=2){const k=(rnd()*8)|0;const j=at(x+DX8[k],y+DY8[k]);if(j>=0){const t2=type[j];if(isWater(t2)||(t2===EMPTY&&rnd()<.25)){if(DX8[k])dirA[i]=DX8[k];swap(i,j);}}return;}
   if(zeroG){walker(i,x,y,false,null);return;}
   const b=at(x+gx,y+gy);const sup=b<0||!canEnter(b,12.5);
   if(sup&&rnd()<.05){const h=2+((rnd()*4)|0);let best=-1;
     for(let k=1;k<=h;k++){const j=at(x+d*PX*k-gx*k,y+d*PY*k-gy*k);if(j<0||type[j]!==EMPTY)break;best=j;}
     if(best>=0){swap(i,best);return;}dirA[i]=-d;}
   if(rnd()<.5)walker(i,x,y,false,null);
+}
+function frogUpdate(i,x,y){
+  if(rnd()<.5)return;
+  let wn=0;for(let k=0;k<4;k++){const j=at(x+DX4[k],y+DY4[k]);if(j>=0&&isWater(type[j]))wn++;}
+  const d=dirA[i]||1;
+  for(let pass=0;pass<2;pass++){const ddx=pass===0?d:0,ddy=pass===0?0:-1;
+    for(let k=1;k<=4;k++){const j=at(x+ddx*k,y+ddy*k);if(j<0)break;const t2=type[j];
+      if(F_FROG[t2]){if(rnd()<.12){setCell(j,EMPTY,temp[j]);life[i]=Math.min(life[i]+60*effMul(i),420);}return;}
+      if(t2!==EMPTY&&!isWater(t2))break;}}
+  if(wn>0)repro(i,x,y,FROG,330,.008,1);
+  if(wn>=2){paddle(i,x,y);return;}
+  frogHop(i,x,y);
+}
+function snakeUpdate(i,x,y){
+  if(breathe(i,x,y))return;
+  if(rnd()<.4)return;
+  if(eat(i,x,y,F_SNAKE,90,.05))return;
+  repro(i,x,y,SNAKE,410,.002,0);
+  if(rnd()<.3)seek(i,x,y,F_SNAKE,9);
+  if(waterAround(x,y)>=2){paddle(i,x,y);return;}
+  walker(i,x,y,false,null);
+}
+function spiderUpdate(i,x,y){
+  if(breathe(i,x,y))return;
+  if(rnd()<.4)return;
+  if(eat(i,x,y,F_SPIDER,70,.07))return;
+  repro(i,x,y,SPIDER,360,.004,0);
+  if(rnd()<.008){const k=(rnd()*8)|0,nx=x+DX8[k],ny=y+DY8[k],j=at(nx,ny);if(j>=0&&type[j]===EMPTY&&sameN(nx,ny,WEB)<3&&sameN(nx,ny,EMPTY)>2)setCell(j,WEB);}
+  const k=(rnd()*8)|0,j=at(x+DX8[k],y+DY8[k]);if(j>=0&&type[j]===WEB&&rnd()<.3){swap(i,j);return;}
+  walker(i,x,y,true,null);
+}
+function mouseUpdate(i,x,y){
+  if(breathe(i,x,y))return;
+  if(rnd()<.35)return;
+  if(eat(i,x,y,F_MOUSE,50,.2))return;
+  repro(i,x,y,MOUSE,280,.015,0);
+  if(waterAround(x,y)>=2){paddle(i,x,y);return;}
+  walker(i,x,y,false,DIG_ANT);
+}
+function crabUpdate(i,x,y){
+  if(rnd()<.45)return;
+  if(eat(i,x,y,F_CRAB,40,.15))return;
+  const wn=waterAround(x,y);
+  repro(i,x,y,CRAB,360,.005,wn>0?1:0);
+  if(!zeroG){const b=at(x+gx,y+gy);if(b>=0&&canEnter(b,12.5)&&rnd()<.6){swap(i,b);return;}}
+  const d=dirA[i]||1,f=at(x+d*PX,y+d*PY);
+  if(f>=0&&isWater(type[f])&&rnd()<.5){swap(i,f);return;}
+  walker(i,x,y,false,DIG_CRAB);
+}
+function weatherStep(){
+  if(!weather)return;
+  const w=WEATHERS[weather];const n=W*w[1];let c=n|0;if(rnd()<n-c)c++;
+  for(let q=0;q<c;q++){
+    let x,y;
+    if(gx===0&&!zeroG){x=(rnd()*W)|0;y=gy>0?0:H-1;}else if(!zeroG){y=(rnd()*H)|0;x=gx>0?0:W-1;}else{x=(rnd()*W)|0;y=0;}
+    const i=at(x,y);if(i<0||type[i]!==EMPTY)continue;
+    if(w[0]===LAVA){disc(x,y+(gy>=0?1:-1),1,LAVA);}else setCell(i,w[0],w[0]===SNOW?-5:undefined);
+  }
 }
 
 // ---------- per-cell update ----------
@@ -661,7 +899,7 @@ function updateCell(i,x,y){
     case OIL:moveLiquid(i,x,y,8,3,.1);return;
     case ACID:{const j=rn(x,y);
       if(j>=0){const t2=type[j];
-        if(t2!==EMPTY&&t2!==WALL&&t2!==GLASS&&t2!==ACID&&t2!==VOID&&t2!==GOLD&&t2!==CLONE){
+        if(t2!==EMPTY&&t2!==WALL&&t2!==GLASS&&t2!==ACID&&t2!==VOID&&t2!==GOLD&&t2!==CLONE&&ST[t2]!==S_LIFE&&t2!==HEATER&&t2!==COOLER){
           const res=t2===METAL?.015:t2===CONCRETE||t2===BRICK?.006:t2===STONE?.03:isWater(t2)?.01:.12;
           if(rnd()<res){setCell(j,rnd()<.3?SMOKE:EMPTY,temp[j]+20);if(rnd()<.3){setCell(i,EMPTY,temp[i]);return;}}}}
       moveLiquid(i,x,y,10.5,3,0);return;}
@@ -693,7 +931,7 @@ function updateCell(i,x,y){
     case STONE:if(temp[i]>1200&&rnd()<.02){setCell(i,LAVA,temp[i]);}return;
     case PLANT:{
       if(temp[i]<-15&&rnd()<.01){die(i);return;}
-      if(life[i]>0&&rnd()<.06){
+      if(life[i]>0&&rnd()<.06*sunEff){
         let ux=-gx,uy=-gy;if(zeroG){const k=(rnd()*4)|0;ux=DX4[k];uy=DY4[k];}
         const s=rnd();let sx=0,sy=0;if(s<.25){sx=PX;sy=PY;}else if(s<.5){sx=-PX;sy=-PY;}
         const j=at(x+ux+sx,y+uy+sy);
@@ -701,6 +939,7 @@ function updateCell(i,x,y){
           if(nl<=0&&rnd()<.6)setCell(j,FLOWER);else{setCell(j,PLANT);life[j]=nl;}
           if(rnd()<.08&&life[i]>6)life[i]=(life[i]/3)|0;else life[i]=0;}
       }
+      if(rnd()<.0006*sunEff){const e=rn(x,y);if(e>=0&&type[e]===EMPTY)setCell(e,SEED,temp[i]);}
       const j=rn(x,y);
       if(j>=0&&type[j]===WATER&&rnd()<.004){if(rnd()<.5){setCell(j,EMPTY,temp[j]);life[i]+=4;}else setCell(j,PLANT,temp[j]);}
       return;}
@@ -778,19 +1017,35 @@ function updateCell(i,x,y){
     case CLONE:{const c=aux[i];
       if(c===0){for(let k=0;k<8;k++){const j=at(x+DX8[k],y+DY8[k]);if(j<0)continue;const t2=type[j];if(t2!==EMPTY&&t2!==CLONE&&t2!==WALL&&t2!==VOID&&t2!==ELEC){aux[i]=t2;break;}}return;}
       const lf=ST[c]===S_LIFE;
-      if(rnd()<(lf?.004:.12)){const j=rn(x,y);if(j>=0&&type[j]===EMPTY){if(lf&&pop[c]>=POPCAP)return;setCell(j,c);if(lf)pop[c]++;}}
+      if(rnd()<(lf?.004:.12)){const j=rn(x,y);if(j>=0&&type[j]===EMPTY){if(lf&&pop[c]>=capOf(c))return;setCell(j,c);if(lf)pop[c]++;}}
       return;}
     case MOSS:{if(temp[i]>50&&rnd()<.01){setCell(i,ASH,temp[i]);return;}
       if(rnd()<.03){let wet=false;for(let k=0;k<8;k++){const j=at(x+DX8[k],y+DY8[k]);if(j>=0&&isWater(type[j])){wet=true;break;}}
         if(wet||rnd()<.04){const k=(rnd()*8)|0,nx=x+DX8[k],ny=y+DY8[k],j=at(nx,ny);
           if(j>=0&&(type[j]===EMPTY||type[j]===WATER)&&nearSurf(nx,ny)&&sameN(nx,ny,MOSS)<4)setCell(j,MOSS,temp[i]);}}
       return;}
-    case FISH:if(!hazard(i,x,y,t))fishUpdate(i,x,y);return;
-    case ANT:if(!hazard(i,x,y,t))antUpdate(i,x,y);return;
-    case BIRD:if(!hazard(i,x,y,t))birdUpdate(i,x,y);return;
-    case WORM:if(!hazard(i,x,y,t))wormUpdate(i,x,y);return;
-    case BEE:if(!hazard(i,x,y,t))beeUpdate(i,x,y);return;
-    case FROG:if(!hazard(i,x,y,t))frogUpdate(i,x,y);return;
+    case WEB:if(rnd()<.05){life[i]--;if(life[i]<=0)setCell(i,EMPTY,temp[i]);}return;
+    case HEATER:temp[i]=heaterT;return;
+    case COOLER:temp[i]=-30;return;
+    case FISH:case PIKE:case MUDSKIP:case CRAB:case FROG:case ALGAE:case MICROBE:case THERMO:case ANT:case SPIDER:case WORM:case MOUSE:case SNAKE:case BEE:case BIRD:
+      if(hazard(i,x,y,t)||!spd(i))return;
+      switch(t){
+        case FISH:swim(i,x,y,FISH,F_FISH,30,340,.005,null);break;
+        case PIKE:swim(i,x,y,PIKE,F_PIKE,80,360,.005,F_PIKE);break;
+        case MUDSKIP:mudUpdate(i,x,y);break;
+        case MICROBE:case THERMO:microbeUpdate(i,x,y,t);break;
+        case ALGAE:algaeUpdate(i,x,y);break;
+        case ANT:antUpdate(i,x,y);break;
+        case BIRD:birdUpdate(i,x,y);break;
+        case WORM:wormUpdate(i,x,y);break;
+        case BEE:beeUpdate(i,x,y);break;
+        case FROG:frogUpdate(i,x,y);break;
+        case SNAKE:snakeUpdate(i,x,y);break;
+        case SPIDER:spiderUpdate(i,x,y);break;
+        case MOUSE:mouseUpdate(i,x,y);break;
+        case CRAB:crabUpdate(i,x,y);break;
+      }
+      return;
   }
 }
 
@@ -815,12 +1070,16 @@ function diffuse(){
         if(k>0){const f=(temp[j]-temp[i])*k;temp[i]+=f/CAP[t1];temp[j]-=f/CAP[t2];}}
       if(y<H-1){const j=i+W;const t2=type[j];const c2=COND[t2];const k=(c1<c2?c1:c2)*.22;
         if(k>0){const f=(temp[j]-temp[i])*k;temp[i]+=f/CAP[t1];temp[j]-=f/CAP[t2];}}
-      if(t1===EMPTY)temp[i]+=(20-temp[i])*.02;
+      if(t1===EMPTY)temp[i]+=(ambEff-temp[i])*.02;
       else if(temp[i]>3000)temp[i]=3000;else if(temp[i]<-273)temp[i]=-273;
     }}
 }
 function step(){
   stamp=stamp===255?1:stamp+1;frame++;
+  if(dayNight)daylight=.5+.5*Math.sin(frame*6.2832/7200);else daylight=1;
+  sunEff=sunOpt*(dayNight?Math.max(0,daylight*1.25-.15):1);
+  ambEff=ambient-(dayNight?(1-daylight)*10:0);
+  weatherStep();
   electric();
   const flip=frame&1;
   if(gx===0){
@@ -860,9 +1119,21 @@ function tcol(tp){
   for(let k=1;k<TK.length;k++){if(tp<=TK[k]){const f=(tp-TK[k-1])/(TK[k]-TK[k-1]);const a=TCOL[k-1],b=TCOL[k];TC[0]=a[0]+(b[0]-a[0])*f;TC[1]=a[1]+(b[1]-a[1])*f;TC[2]=a[2]+(b[2]-a[2])*f;return;}}
   const l=TCOL[TCOL.length-1];TC[0]=l[0];TC[1]=l[1];TC[2]=l[2];
 }
-const cre=new Int32Array(N);let creN=0,particles=0;
+const cre=new Int32Array(N);let creN=0,particles=0,aggTick=0,aggReady=false;
+const sums=new Float64Array(128*GN),aggCnt=new Int32Array(128);
+const VIR=[[68,1,84],[59,82,139],[33,145,140],[94,201,98],[253,231,37]],GC=[0,0,0];
+function geneCol(i){
+  const g=i*GN;
+  if(geneView===6){const h=gene[g+G_HUE]/255*6,c=200,x=c*(1-Math.abs(h%2-1)),m=50;let r=0,gg=0,b=0;
+    if(h<1){r=c;gg=x;}else if(h<2){r=x;gg=c;}else if(h<3){gg=c;b=x;}else if(h<4){gg=x;b=c;}else if(h<5){r=x;b=c;}else{r=c;b=x;}
+    GC[0]=r+m|0;GC[1]=gg+m|0;GC[2]=b+m|0;return;}
+  const v=gene[g+[0,0,1,2,3,4][geneView]]/255*4,k=Math.min(3,v|0),f=v-k,a=VIR[k],b=VIR[k+1];
+  GC[0]=a[0]+(b[0]-a[0])*f|0;GC[1]=a[1]+(b[1]-a[1])*f|0;GC[2]=a[2]+(b[2]-a[2])*f|0;
+}
+function geneCss(i){geneCol(i);return `rgb(${GC[0]},${GC[1]},${GC[2]})`;}
 function render(){
   popc.fill(0);creN=0;particles=0;
+  const agg=(++aggTick%15)===0;if(agg)sums.fill(0);
   const tv=tempView;
   for(let i=0;i<N;i++){
     const t=type[i];
@@ -892,8 +1163,12 @@ function render(){
       case GOLD:if((vary[i]&31)===0){r=255;g=242;b=170;}break;
       case MERCURY:{const q=((vary[i]+frame)>>2)&15;r+=q;g+=q;b+=q;break;}
       case FLOWER:{const k=vary[i]%3;if(k===0){r=238;g=96;b=150;}else if(k===1){r=250;g=214;b=70;}else{r=180;g=120;b=236;}break;}
-      case FISH:case ANT:case BIRD:case WORM:case BEE:case FROG:cre[creN++]=i;popc[t]++;break;
+      case WEB:case HEATER:case COOLER:if(t===WEB){const bg=BG[i];r=(r+(bg&255))>>1;g=(g+((bg>>8)&255))>>1;b=(b+((bg>>16)&255))>>1;}else gl=(vary[i]&3)===0;break;
     }
+    if(ST[t]===S_LIFE){popc[t]++;
+      if(agg){const o=t*GN,gg=i*GN;for(let k=0;k<GN;k++)sums[o+k]+=gene[gg+k];}
+      if(t===MICROBE||t===THERMO||t===ALGAE){if(geneView){geneCol(i);r=GC[0];g=GC[1];b=GC[2];}else if(t!==ALGAE)gl=((vary[i]+frame)&15)===0;}
+      else cre[creN++]=i;}
     if(charge[i]===2){r=200;g=240;b=255;gl=true;}else if(charge[i]===1){r=(r+140)>>1;g=(g+200)>>1;b=(b+255)>>1;}
     if(tp>420&&t!==FIRE&&t!==LAVA&&t!==MOLTEN&&t!==PLASMA&&ST[t]!==S_GAS&&ST[t]!==S_LIFE){const f=Math.min((tp-420)/800,1);r+=(255-r)*f;g+=(110-g)*f*.8;b+=(30-b)*f*.8;if(f>.25)gl=true;}
     if(tv){tcol(tp);r=TC[0]*.72+r*.28;g=TC[1]*.72+g*.28;b=TC[2]*.72+b*.28;}
@@ -901,7 +1176,8 @@ function render(){
     buf[i]=pack(r,g,b);
     gbuf[i]=gl?pack(r,g,b):0;
   }
-  for(let k=40;k<=45;k++)pop[k]=popc[k];
+  for(const k of LIFE){pop[k]=popc[k];if(prevPop[k]>0&&popc[k]===0&&frame>0)logEvo(k,`${NAME[k]} สูญพันธุ์แล้ว`);prevPop[k]=popc[k];}
+  if(agg){for(const k of LIFE)aggCnt[k]=popc[k];aggReady=true;}
   ctx.putImageData(img,0,0);gctx.putImageData(gimg,0,0);
 }
 
@@ -913,26 +1189,44 @@ function drawOverlay(){
   const s=cw/W;
   for(let n=0;n<creN;n++){
     const i=cre[n],t=type[i],x=i%W,y=(i/W)|0,cx=(x+.5)*s,cy=(y+.5)*s,d=dirA[i]||1,R=s*1.3;
+    const bc=geneView?geneCss(i):SPCOL[t];
     octx.save();octx.translate(cx,cy);
     switch(t){
-      case FISH:{octx.scale(d,1);octx.fillStyle="#ff9c48";octx.beginPath();octx.ellipse(0,0,R*1.15,R*.62,0,0,7);octx.fill();
-        octx.beginPath();octx.moveTo(-R*.9,0);octx.lineTo(-R*1.7,-R*.6);octx.lineTo(-R*1.7,R*.6);octx.closePath();octx.fill();
-        octx.fillStyle="#1a1008";octx.beginPath();octx.arc(R*.55,-R*.12,R*.16,0,7);octx.fill();break;}
+      case FISH:case PIKE:case MUDSKIP:{const L=t===PIKE?1.45:1;octx.scale(d,1);octx.fillStyle=bc;octx.beginPath();octx.ellipse(0,0,R*1.15*L,R*.62*L,0,0,7);octx.fill();
+        octx.beginPath();octx.moveTo(-R*.9*L,0);octx.lineTo(-R*1.7*L,-R*.6*L);octx.lineTo(-R*1.7*L,R*.6*L);octx.closePath();octx.fill();
+        if(t===PIKE){octx.fillStyle="rgba(10,20,10,.35)";for(let k=-1;k<=1;k++)octx.fillRect(k*R*.55-R*.08,-R*.6,R*.16,R*1.2);}
+        if(t===MUDSKIP){octx.fillStyle="#eef2e6";octx.beginPath();octx.arc(R*.45,-R*.62,R*.28,0,7);octx.fill();octx.fillStyle="#141008";octx.beginPath();octx.arc(R*.5,-R*.66,R*.13,0,7);octx.fill();}
+        else{octx.fillStyle="#1a1008";octx.beginPath();octx.arc(R*.55*L,-R*.12*L,R*.16,0,7);octx.fill();}break;}
       case ANT:{octx.scale(d,1);octx.strokeStyle="#7a2a1a";octx.lineWidth=Math.max(1,s*.18);octx.beginPath();for(let k=-1;k<=1;k++){octx.moveTo(k*R*.45,0);octx.lineTo(k*R*.45-R*.25,R*.7);octx.moveTo(k*R*.45,0);octx.lineTo(k*R*.45+R*.25,R*.7);}octx.stroke();
-        octx.fillStyle="#d4583a";for(let k=-1;k<=1;k++){octx.beginPath();octx.arc(k*R*.55,0,R*(k===1?.32:.4),0,7);octx.fill();}break;}
-      case BIRD:{const wy=((frame>>2)+i)%8<4?-R*.7:R*.05;octx.strokeStyle="#f3f5fa";octx.lineWidth=Math.max(1.2,s*.45);octx.lineCap="round";octx.lineJoin="round";
+        octx.fillStyle=bc;for(let k=-1;k<=1;k++){octx.beginPath();octx.arc(k*R*.55,0,R*(k===1?.32:.4),0,7);octx.fill();}break;}
+      case BIRD:{const wy=((frame>>2)+i)%8<4?-R*.7:R*.05;octx.strokeStyle=bc;octx.lineWidth=Math.max(1.2,s*.45);octx.lineCap="round";octx.lineJoin="round";
         octx.beginPath();octx.moveTo(-R*1.1,wy);octx.quadraticCurveTo(-R*.4,wy*.3,0,R*.2);octx.quadraticCurveTo(R*.4,wy*.3,R*1.1,wy);octx.stroke();break;}
-      case WORM:{const w=Math.sin((frame+i)*.25)*R*.4;octx.strokeStyle="#f28ca2";octx.lineWidth=Math.max(1.4,s*.6);octx.lineCap="round";
+      case WORM:{const w=Math.sin((frame+i)*.25)*R*.4;octx.strokeStyle=bc;octx.lineWidth=Math.max(1.4,s*.6);octx.lineCap="round";
         octx.beginPath();octx.moveTo(-R*1.1,0);octx.quadraticCurveTo(0,w,R*1.1,0);octx.stroke();break;}
       case BEE:{const fl=((frame+i)&2)?.7:.45;octx.fillStyle="rgba(235,245,255,.75)";octx.beginPath();octx.ellipse(-R*.25,-R*.55,R*.4,R*fl,-.4,0,7);octx.ellipse(R*.25,-R*.55,R*.4,R*fl,.4,0,7);octx.fill();
-        octx.fillStyle="#fbd02c";octx.beginPath();octx.ellipse(0,0,R*.85,R*.55,0,0,7);octx.fill();
+        octx.fillStyle=bc;octx.beginPath();octx.ellipse(0,0,R*.85,R*.55,0,0,7);octx.fill();
         octx.fillStyle="#1c1408";octx.fillRect(-R*.15,-R*.55,R*.28,R*1.1);break;}
-      case FROG:{octx.fillStyle="#5fc44a";octx.beginPath();octx.ellipse(0,R*.1,R*1,R*.72,0,0,7);octx.fill();
+      case FROG:{octx.fillStyle=bc;octx.beginPath();octx.ellipse(0,R*.1,R*1,R*.72,0,0,7);octx.fill();
         octx.fillStyle="#eaf6e2";octx.beginPath();octx.arc(-R*.45,-R*.5,R*.3,0,7);octx.arc(R*.45,-R*.5,R*.3,0,7);octx.fill();
         octx.fillStyle="#10200c";octx.beginPath();octx.arc(-R*.45+d*R*.08,-R*.5,R*.14,0,7);octx.arc(R*.45+d*R*.08,-R*.5,R*.14,0,7);octx.fill();break;}
+      case SNAKE:{octx.scale(d,1);const ph=(frame+i)*.3;octx.strokeStyle=bc;octx.lineWidth=Math.max(1.6,s*.62);octx.lineCap="round";octx.beginPath();
+        for(let k=0;k<=8;k++){const px=-R*2.1+k*R*.42,py=Math.sin(ph+k*.9)*R*.38;if(k)octx.lineTo(px,py);else octx.moveTo(px,py);}octx.stroke();
+        octx.fillStyle=bc;octx.beginPath();octx.ellipse(R*1.4,Math.sin(ph+8*.9)*R*.38,R*.42,R*.32,0,0,7);octx.fill();
+        octx.fillStyle="#141008";octx.beginPath();octx.arc(R*1.55,Math.sin(ph+8*.9)*R*.38-R*.1,R*.09,0,7);octx.fill();break;}
+      case SPIDER:{octx.strokeStyle="#d8c8d0";octx.lineWidth=Math.max(1,s*.14);octx.beginPath();
+        for(let k=0;k<4;k++){const a=-.9+k*.6,b=((frame>>2)+k+i)&1?.15:-.15;octx.moveTo(0,0);octx.lineTo(Math.cos(a+b)*R*1.2,Math.sin(a+b)*R*.9+R*.3);octx.moveTo(0,0);octx.lineTo(-Math.cos(a-b)*R*1.2,Math.sin(a-b)*R*.9+R*.3);}octx.stroke();
+        octx.fillStyle=bc;octx.beginPath();octx.arc(0,-R*.05,R*.38,0,7);octx.fill();octx.beginPath();octx.arc(0,R*.45,R*.5,0,7);octx.fill();break;}
+      case MOUSE:{octx.scale(d,1);octx.strokeStyle="#e8a0a8";octx.lineWidth=Math.max(1,s*.16);octx.beginPath();octx.moveTo(-R*.9,R*.1);octx.quadraticCurveTo(-R*1.6,-R*.3,-R*1.9,R*.2);octx.stroke();
+        octx.fillStyle=bc;octx.beginPath();octx.ellipse(0,R*.1,R*1.0,R*.6,0,0,7);octx.fill();octx.beginPath();octx.arc(R*.45,-R*.45,R*.3,0,7);octx.fill();
+        octx.fillStyle="#141010";octx.beginPath();octx.arc(R*.75,-R*.05,R*.11,0,7);octx.fill();break;}
+      case CRAB:{octx.strokeStyle=bc;octx.lineWidth=Math.max(1,s*.18);octx.beginPath();for(let k=-1;k<=1;k+=2){for(let q=0;q<3;q++){octx.moveTo(k*R*.5,R*.1);octx.lineTo(k*R*(1+q*.2),R*(.5+q*.15));}}octx.stroke();
+        octx.fillStyle=bc;octx.beginPath();octx.ellipse(0,R*.1,R*.95,R*.6,0,0,7);octx.fill();
+        octx.beginPath();octx.arc(-R*1.15,-R*.45,R*.32,0,7);octx.arc(R*1.15,-R*.45,R*.32,0,7);octx.fill();
+        octx.fillStyle="#141008";octx.beginPath();octx.arc(-R*.3,-R*.55,R*.11,0,7);octx.arc(R*.3,-R*.55,R*.11,0,7);octx.fill();break;}
     }
     octx.restore();
   }
+  if(daylight<.98){octx.fillStyle=`rgba(4,10,30,${((1-daylight)*.5).toFixed(3)})`;octx.fillRect(0,0,cw,ch);}
   if(labels.length){
     const fs=Math.max(10*dpr,s*3.1);
     octx.font=`500 ${fs}px "IBM Plex Sans Thai",system-ui,sans-serif`;octx.textBaseline="middle";
@@ -945,7 +1239,7 @@ function drawOverlay(){
 }
 
 // ---------- scenes ----------
-function clearAll(){type.fill(0);temp.fill(20);life.fill(0);aux.fill(0);charge.fill(0);dirA.fill(1);clk.fill(0);for(let i=0;i<N;i++)vary[i]=(rnd()*256)|0;labels=[];}
+function clearAll(){resetEvo();gen.fill(0);type.fill(0);temp.fill(20);life.fill(0);aux.fill(0);charge.fill(0);dirA.fill(1);clk.fill(0);for(let i=0;i<N;i++)vary[i]=(rnd()*256)|0;labels=[];}
 function put(x,y,t,p){if(x<0||y<0||x>=W||y>=H)return;if(p!==undefined&&rnd()>=p)return;setCell(y*W+x,t);}
 function rect(x0,y0,x1,y1,t,p){for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++)put(x,y,t,p);}
 function disc(cx,cy,r,t,p){for(let y=-r;y<=r;y++)for(let x=-r;x<=r;x++)if(x*x+y*y<=r*r+r*.6)put(cx+x,cy+y,t,p);}
@@ -981,6 +1275,11 @@ const SCENES={
     for(let k=0;k<6;k++)put(ri(X(.52),X(.95)),base-ri(14,22),BEE);
     for(let k=0;k<4;k++)put(ri(X(.08),X(.9)),ri(10,Math.max(14,Math.round(base*.35))),BIRD);
     for(const s of [-1,1]){const fx=pc+s*(pw+3);if(fx>=0&&fx<W)put(fx,gr[fx]-1,FROG);}
+    scatter(ALGAE,Math.round(pw*1.1),(x,y,i)=>type[i]===WATER&&y<wl+6);
+    scatter(MICROBE,Math.round(pw*.8),(x,y,i)=>type[i]===WATER);
+    scatter(CRAB,2,(x,y,i)=>type[i]===WATER&&ST[type[i+W]]===S_POWDER);
+    for(let k=0;k<3;k++){const x=ri(X(.55),W-4);put(x,gr[x]-1,MOUSE);}
+    for(let k=0;k<2;k++){const x=ri(X(.62),X(.7));put(x,gr[x]-ri(5,10),SPIDER);}
     labels=[{x:Math.max(1,pc-pw),y:wl-5,t:"บ่อน้ำ · ปลา พืชน้ำ"},{x:X(.5),y:base-30,t:"ทุ่งดอกไม้ · ผึ้ง มด"}];
   },
   volcano(){
@@ -1055,6 +1354,51 @@ const SCENES={
     rect(X(.86),Y(.27),X(.86),wy-1,METAL);
     labels=[{x:X(.03),y:wy-8,t:"แบตเตอรี่"},{x:gxw+3,y:Y(.46),t:"← ต่อโลหะตรงนี้"},{x:bx+3,y:Y(.517),t:"← ช่องว่าง"},{x:X(.41),y:Y(.6)-3,t:"ดินปืน"},{x:X(.136),y:Y(.7)-4,t:"ตู้ปลา"},{x:X(.58),y:Y(.25)-4,t:"ไม้"},{x:j0,y:jt-4,t:"มีเทน"}];
   },
+  evo(){
+    setGravity("down");clearAll();
+    rect(0,H-4,W-1,H-1,STONE);
+    const fl=H-5,base=Y(PORTRAIT?.46:.5),pe=X(.5);
+    // pond basin
+    const bot=new Int16Array(W);
+    for(let x=0;x<W;x++){
+      if(x<pe){const u=Math.min(1,(x+pe*.25)/(pe*1.25));bot[x]=Math.round(base+3+Math.sin(u*Math.PI)*(fl-base-8)*.92);}
+      else bot[x]=Math.round(base-4+Math.sin(x*.07)*1.4);
+    }
+    for(let x=0;x<pe;x++){for(let y=bot[x];y<=fl;y++)put(x,y,y<bot[x]+3?SAND:STONE);for(let y=base;y<bot[x];y++)put(x,y,WATER);}
+    for(let x=pe;x<W;x++)for(let y=bot[x];y<=fl;y++)put(x,y,rnd()<.06?SAND:DIRT);
+    for(let x=pe;x<pe+4;x++)for(let y=bot[x];y<base+3;y++)put(x,y,SAND);
+    const ls=base-6;
+    rect(0,base,0,fl,WALL);
+    // hot spring over heater rods
+    const h0=X(.83),h1=Math.min(W-3,X(.97)),hb=Math.min(fl-6,base+Math.round((fl-base)*.42));
+    rect(h0,ls,h1,base-1,EMPTY);for(let x=h0;x<=h1;x++)for(let y=base;y<=hb;y++)put(x,y,WATER);
+    rect(h0-2,ls+2,h0-1,hb+4,STONE);rect(h1+1,ls+2,h1+2,hb+4,STONE);rect(h0,hb+1,h1,hb+2,STONE);
+    rect(h0,hb+3,h1,hb+4,HEATER);
+    // vinegar pond (weak acid)
+    const v0=X(.62),v1=X(.73),vb=base+Math.max(6,Math.round((fl-base)*.22));
+    rect(v0,ls,v1,base-1,EMPTY);rect(v0-1,ls+2,v0-1,vb+1,GLASS);rect(v1+1,ls+2,v1+1,vb+1,GLASS);rect(v0-1,vb+1,v1+1,vb+1,GLASS);
+    rect(v0,base,v1,vb,VINEGAR);
+    // land life
+    for(const f of [.53,.56,.6,.76,.79,.81]){const x=X(f);stalk(x,bot[x]-1,ri(6,13),true);}
+    const tx=X(.745);tree(tx,bot[tx]-1,PORTRAIT?11:13,S(.04));
+    scatter(SEED,10,(x,y,i)=>x>pe&&type[i]===EMPTY&&y===bot[x]-1);
+    // populate
+    scatter(ALGAE,Math.round(pe*.9),(x,y,i)=>type[i]===WATER&&x<pe&&y<base+8);
+    scatter(MICROBE,Math.round(pe*.7),(x,y,i)=>type[i]===WATER&&x<pe);
+    scatter(MICROBE,18,(x,y,i)=>type[i]===WATER&&x>=h0&&x<=h1);
+    scatter(MICROBE,30,(x,y,i)=>type[i]===VINEGAR);
+    scatter(FISH,Math.max(8,Math.round(pe*.12)),(x,y,i)=>type[i]===WATER&&x<pe&&y>base+3);
+    scatter(PIKE,2,(x,y,i)=>type[i]===WATER&&x<pe&&y>base+6);
+    scatter(CRAB,4,(x,y,i)=>type[i]===WATER&&x<pe&&type[i+W]===SAND);
+    for(const x of [pe+2,pe+4])put(x,bot[x]-1,FROG);
+    const land=(n,t)=>{for(let k=0;k<n;k++){const x=ri(pe+8,v0-3);put(x,bot[x]-1-ri(0,2),t);}};
+    land(12,ANT);land(6,MOUSE);land(2,SNAKE);
+    for(let k=0;k<2;k++){const x=ri(X(.75),X(.82));put(x,bot[x]-ri(4,12),SPIDER);}
+    for(let k=0;k<7;k++){const x=ri(pe+2,W-4);put(x,bot[x]+ri(3,9),WORM);}
+    for(let k=0;k<5;k++)put(ri(pe+4,W-6),base-ri(10,18),BEE);
+    for(let k=0;k<3;k++)put(ri(6,W-8),ri(6,Math.max(10,base-24)),BIRD);
+    labels=[{x:3,y:base-5,t:"บ่อน้ำ · สาหร่าย จุลินทรีย์ ปลา ปู"},{x:h0-6,y:ls-6,t:"บ่อน้ำร้อน"},{x:v0-3,y:ls-6,t:"น้ำส้มสายชู"},{x:X(.53),y:base-(PORTRAIT?30:34),t:"บก · หนู งู แมงมุม มด"}];
+  },
   chem(){
     setGravity("down");clearAll();
     rect(0,H-4,W-1,H-1,WALL);
@@ -1112,10 +1456,10 @@ const GROUPS=[
   ["ผง",[SAND,GRAVEL,DIRT,CLAY,SALT,SUGAR,SODA,SNOW,CEMENT,SEED,ASH,RUST,FOAM,REMAINS]],
   ["ของเหลว",[WATER,SALTW,VINEGAR,OIL,ACID,HONEY,MUD,WETCON,LWAX,CARAMEL,MERCURY,LAVA,MOLTEN,LN2]],
   ["ก๊าซ",[STEAM,SMOKE,METHANE,HYDROGEN,CO2]],
-  ["ของแข็ง",[WALL,STONE,BRICK,CONCRETE,WOOD,METAL,GOLD,GLASS,ICE,DRYICE,WAX,SPONGE,COAL,PLANT,MOSS,FLOWER]],
+  ["ของแข็ง",[WALL,STONE,BRICK,CONCRETE,WOOD,METAL,GOLD,GLASS,ICE,DRYICE,WAX,SPONGE,COAL,PLANT,MOSS,FLOWER,WEB]],
   ["วัตถุระเบิด",[GUNP,NITRO,THERMITE,URANIUM]],
-  ["พลังงาน",[FIRE,PLASMA,T_SPARK,BATTERY,CLONE,VOID]],
-  ["สิ่งมีชีวิต",[FISH,ANT,BIRD,WORM,BEE,FROG]],
+  ["พลังงาน",[FIRE,PLASMA,T_SPARK,BATTERY,HEATER,COOLER,CLONE,VOID]],
+  ["สิ่งมีชีวิต",LIFE.slice()],
   ["เครื่องมือ",[T_ERASE,T_HEAT,T_COOL]]
 ];
 const STLABEL={1:"ของแข็ง",2:"ผง",3:"ของเหลว",4:"ก๊าซ",5:"พลังงาน",6:"สิ่งมีชีวิต"};
@@ -1128,6 +1472,7 @@ function swCss(id){
   if(id===CLONE)return"conic-gradient(#78389a,#3a8cf0,#e58a4b,#78389a)";
   if(id===GOLD)return"linear-gradient(135deg,#fff0a8,#e8b83c 50%,#a8781c)";
   if(id===MERCURY)return"linear-gradient(135deg,#f4f6fa,#a8aeb8 55%,#6a7078)";
+  if(ST[id]===S_LIFE&&id<120)return SPCOL[id];
   if(id===T_HEAT)return"linear-gradient(160deg,#ffcf6a,#f0461e)";
   if(id===T_COOL)return"linear-gradient(160deg,#d8f4ff,#3a8cf0)";
   if(id===T_SPARK||id===ELEC)return"radial-gradient(circle,#ffffff,#9fd8ff 60%,#2c5c8a)";
@@ -1165,7 +1510,12 @@ function select(id){
   document.getElementById("seldesc").textContent=DESC[id];
   const f=document.getElementById("selfacts");f.innerHTML="";
   const add=(k,v)=>{const d=document.createElement("div");const dt=document.createElement("dt");dt.textContent=k;const dd=document.createElement("dd");dd.textContent=v;d.append(dt,dd);f.appendChild(d);};
-  if(id<120){
+  if(id<120&&ST[id]===S_LIFE){
+    add("ทนร้อนเริ่มต้น","≤ "+fmtT(SPHOT[id]));
+    add("ทนหนาวเริ่มต้น","≥ "+fmtT(SPCOLD[id]));
+    add("ถิ่นอาศัย",["บนบก","ในน้ำ","น้ำและบก"][HAB[id]]);
+    if(typeof setEvoSel==="function")setEvoSel(id);
+  }else if(id<120){
     add("อุณหภูมิเริ่ม",fmtT(BT[id]));
     add("ความหนาแน่น",ST[id]===S_SOLID?"คงที่":DEN[id].toFixed(DEN[id]<1?1:0));
     add("จุดติดไฟ",IGN[id]?"~"+fmtT(IGN[id]):"ไม่ติดไฟ");
@@ -1198,14 +1548,82 @@ document.getElementById("selchip").addEventListener("click",()=>sheet(true));
 document.getElementById("sheetclose").addEventListener("click",()=>sheet(false));
 scrim.addEventListener("click",()=>sheet(false));
 
-// populations
-const popBox=document.getElementById("pops");const popRows={};
-const POPCOL={[FISH]:"#ff9c48",[ANT]:"#d4583a",[BIRD]:"#f3f5fa",[WORM]:"#f28ca2",[BEE]:"#fbd02c",[FROG]:"#5fc44a"};
-for(const id of [FISH,ANT,BIRD,WORM,BEE,FROG]){
-  const r=document.createElement("div");r.className="prow";
-  r.innerHTML=`<span class="dot" style="background:${POPCOL[id]}"></span><span>${NAME[id]}</span><span class="ct">0</span><span class="bar"><i style="background:${POPCOL[id]}"></i></span>`;
-  popBox.appendChild(r);popRows[id]={ct:r.querySelector(".ct"),bar:r.querySelector("i")};
+// evolution panel
+let evoSel=FISH;
+const splist=document.getElementById("splist"),spRows={};
+for(const t of LIFE){
+  const b=document.createElement("button");b.type="button";b.className="sprow";b.setAttribute("aria-pressed",t===evoSel?"true":"false");
+  const dt=document.createElement("span");dt.className="dot";dt.style.background=SPCOL[t];
+  const nm=document.createElement("span");nm.className="nm";nm.textContent=NAME[t];
+  const ct=document.createElement("span");ct.className="ct";ct.textContent="0";
+  b.append(dt,nm,ct);b.addEventListener("click",()=>setEvoSel(t));splist.appendChild(b);spRows[t]={b,ct};
 }
+const TRAITS=[
+  ["ทนร้อน",G_HOT,(t,v)=>"≤ "+Math.round(hotLim(t,v))+"°C"],
+  ["ทนหนาว",G_COLD,(t,v)=>"≥ "+Math.round(coldLim(t,v))+"°C"],
+  ["ต้านกรดและสารพิษ",G_CHEM,(t,v)=>Math.round(v/255*100)+"%"],
+  ["ปอด / เหงือก",G_LUNG,(t,v)=>HAB[t]===1?"นอกน้ำ ~"+((30+v*2.5)/60).toFixed(1)+" วิ":HAB[t]===0?"กลั้นหายใจ ~"+((60+v*2)/60).toFixed(1)+" วิ":"อยู่ได้ทั้งสองที่"],
+  ["ความเร็ว",G_SPD,(t,v)=>Math.round((v+90)/345*100)+"%"],
+  ["ความดก",G_FERT,(t,v)=>"×"+(.4+v/255*1.2).toFixed(2)],
+  ["ประสิทธิภาพการกิน",G_EFF,(t,v)=>"×"+(.6+v/255*.8).toFixed(2)]
+];
+const traitsEl=document.getElementById("traits"),trRows=[];
+for(const [nm] of TRAITS){
+  const d=document.createElement("div");d.className="tr";
+  const dt=document.createElement("dt");dt.textContent=nm;const dd=document.createElement("dd");dd.textContent="—";
+  const tb=document.createElement("div");tb.className="tb";const fi=document.createElement("i");const mk0=document.createElement("b");tb.append(fi,mk0);
+  d.append(dt,dd,tb);traitsEl.appendChild(d);trRows.push({dd,fi,mk0});
+}
+function setEvoSel(t){evoSel=t;for(const k of LIFE)spRows[k].b.setAttribute("aria-pressed",k===t?"true":"false");updateEvoUI(true);}
+const spchart=document.getElementById("spchart"),spctx=spchart.getContext("2d");
+const CSSV=getComputedStyle(document.documentElement);
+const cssv=n=>(CSSV.getPropertyValue(n)||"").trim()||"#888";
+function drawChart(){
+  const dp=Math.min(window.devicePixelRatio||1,2),cw=Math.max(10,Math.round(spchart.clientWidth*dp)),chh=Math.round(64*dp);
+  if(spchart.width!==cw||spchart.height!==chh){spchart.width=cw;spchart.height=chh;}
+  spctx.clearRect(0,0,cw,chh);
+  const h=hist[evoSel];let mx=10;for(let k=0;k<HN;k++)if(h[k]>mx)mx=h[k];
+  spctx.strokeStyle=cssv("--line");spctx.lineWidth=1;spctx.beginPath();for(let q=1;q<4;q++){const yy=Math.round(chh*q/4)+.5;spctx.moveTo(0,yy);spctx.lineTo(cw,yy);}spctx.stroke();
+  if(histN<2)return;
+  const n=histN,x0=cw-(n-1)/(HN-1)*cw,pt=k=>[x0+(k-(HN-n))/(HN-1)*cw,chh-4-(h[k]/mx)*(chh-10)];
+  spctx.beginPath();for(let k=HN-n;k<HN;k++){const [px,py]=pt(k);if(k===HN-n)spctx.moveTo(px,py);else spctx.lineTo(px,py);}
+  const col=SPCOL[evoSel];spctx.strokeStyle=col;spctx.lineWidth=1.6*dp;spctx.stroke();
+  spctx.lineTo(cw,chh);spctx.lineTo(x0,chh);spctx.closePath();spctx.globalAlpha=.18;spctx.fillStyle=col;spctx.fill();spctx.globalAlpha=1;
+  const [ex,ey]=pt(HN-1);spctx.fillStyle=col;spctx.beginPath();spctx.arc(ex-2*dp,ey,2.5*dp,0,7);spctx.fill();
+  spctx.fillStyle=cssv("--muted");spctx.font=`${10*dp}px "IBM Plex Mono",monospace`;spctx.textBaseline="top";spctx.fillText("สูงสุด "+Math.round(mx),4*dp,3*dp);
+}
+const evlogEl=document.getElementById("evlog");
+function updateEvoUI(force){
+  document.getElementById("evtime").textContent="เวลาจำลอง "+simTime();
+  for(const t of LIFE){const r=spRows[t];r.ct.textContent=pop[t];r.b.classList.toggle("zero",pop[t]===0);}
+  const t=evoSel,n=aggCnt[t];
+  document.getElementById("spname").textContent=NAME[t];
+  document.getElementById("spmeta").textContent=`ประชากร ${pop[t]} · รุ่นสูงสุด ${maxGen[t]}`;
+  TRAITS.forEach(([,k,fmt],q)=>{const r=trRows[q];const base=k===G_CHEM?SPCHEM[t]:k===G_LUNG?SPLUNG[t]:128;r.mk0.style.left=(base/255*100)+"%";
+    if(n>0&&aggReady){const v=sums[t*GN+k]/n;r.fi.style.width=(v/255*100).toFixed(1)+"%";r.dd.textContent=fmt(t,v);}else{r.fi.style.width="0%";r.dd.textContent="—";}});
+  drawChart();
+  if(evDirty||force){evDirty=false;evlogEl.innerHTML="";
+    if(!evlog.length){const li=document.createElement("li");li.className="empty";li.textContent="ยังไม่มีเหตุการณ์ สิ่งมีชีวิตที่ออกลูกจะส่งต่อยีนพร้อมการกลายพันธุ์ ลองเปลี่ยนอุณหภูมิหรือเปิดฝนกรดเพื่อสร้างแรงกดดันในการคัดเลือก";evlogEl.appendChild(li);}
+    for(const e of evlog){const li=document.createElement("li");const tm=document.createElement("time");tm.textContent=e.tm;const dt=document.createElement("span");dt.className="dot";dt.style.background=SPCOL[e.t];const tx=document.createElement("span");tx.textContent=e.txt;li.append(tm,dt,tx);evlogEl.appendChild(li);}}
+}
+// panels live under the tank on wide screens and in the bottom sheet on phones
+const belowEl=document.getElementById("below"),evoCard=document.getElementById("evo"),optsCard=document.getElementById("opts");
+const mqMob=window.matchMedia("(max-width:760px)");
+function placePanels(){const tgt=mqMob.matches?document.getElementById("side"):belowEl;if(evoCard.parentNode!==tgt)tgt.append(evoCard,optsCard);}
+placePanels();try{mqMob.addEventListener("change",placePanels);}catch(e){}
+// options
+const bindRange=(id,fn)=>{const el=document.getElementById(id),out=document.getElementById(id+"v");const f=()=>{out.textContent=fn(+el.value);};el.addEventListener("input",f);f();};
+bindRange("o-amb",v=>{ambient=v;return v+"°C";});
+bindRange("o-sun",v=>{sunOpt=v/100;return v+"%";});
+bindRange("o-cap",v=>{popCap=v;return String(v);});
+bindRange("o-heat",v=>{heaterT=v;return v+"°C";});
+document.getElementById("o-mut").addEventListener("change",e=>{mutRate=+e.target.value;});
+document.getElementById("o-wx").addEventListener("change",e=>{weather=+e.target.value;});
+const dayB=document.getElementById("o-day");
+dayB.addEventListener("click",()=>{dayNight=!dayNight;dayB.setAttribute("aria-pressed",dayNight?"true":"false");dayB.textContent=dayNight?"เปิดอยู่":"ปิดอยู่";});
+const GVL=[null,["ทนร้อนน้อย","ทนร้อนมาก"],["ทนหนาวน้อย","ทนหนาวมาก"],["ต้านน้อย","ต้านมาก"],["ปอดน้อย","ปอดมาก"],["ช้า","เร็ว"],["สายตระกูลต่างกันจะมีสีต่างกัน",""]];
+document.getElementById("o-gv").addEventListener("change",e=>{geneView=+e.target.value;const L=document.getElementById("gvleg");L.hidden=geneView===0;
+  if(geneView){document.getElementById("gvlo").textContent=GVL[geneView][0];document.getElementById("gvhi").textContent=GVL[geneView][1];document.getElementById("gvbar").classList.toggle("hue",geneView===6);}});
 
 // temperature legend
 (function(){const sc=document.getElementById("scale");const bar=document.createElement("div");bar.className="bar";
@@ -1276,11 +1694,12 @@ function paintAt(cx,cy){
   for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){if(dx*dx+dy*dy>r*r+r*.5)continue;const i=at(cx+dx,cy+dy);if(i>=0)applyCell(i);}
 }
 function placeCreature(cx,cy){
-  const r=brush-1;
+  const r=brush-1;let placed=0;
   for(let tries=0;tries<12;tries++){
     const dx=Math.round((rnd()*2-1)*r),dy=Math.round((rnd()*2-1)*r);const i=at(cx+dx,cy+dy);if(i<0)continue;
     const cur=type[i];
-    if(cur===EMPTY||(sel===FISH&&isWater(cur))||(sel===FROG&&isWater(cur))||(sel===WORM&&SOIL[cur])){setCell(i,sel);return;}
+    const aq=HAB[sel]>=1&&isWater(cur),mic=(sel===MICROBE||sel===THERMO)&&LIQOK[cur];
+    if(cur===EMPTY||aq||mic||(sel===WORM&&SOIL[cur])){setCell(i,sel);if(!(sel===MICROBE||sel===THERMO||sel===ALGAE)||++placed>=6)return;}
   }
 }
 function paintLine(a,b){
@@ -1303,7 +1722,7 @@ function updateReadout(){
   const i=hover.y*W+hover.x,t=type[i];
   let s=`x ${String(hover.x).padStart(3," ")} y ${String(hover.y).padStart(3," ")} · ${NAME[t]} · ${temp[i].toFixed(1)} °C`;
   if(t===WETCON)s+=` · บ่มแล้ว ${Math.round((1-Math.max(0,life[i])/WCL)*100)}%`+(life[i]>WCL*.45?" (ยังไหลได้)":" (ก่อตัวแล้ว)");
-  else if(ST[t]===S_LIFE)s+=` · พลังงาน ${life[i]}`;
+  else if(ST[t]===S_LIFE){const g=i*GN;s+=` · รุ่นที่ ${gen[i]} · พลังงาน ${life[i]} · ทนร้อน ${Math.round(hotLim(t,gene[g]))}°C · ทนหนาว ${Math.round(coldLim(t,gene[g+1]))}°C · ต้านกรด ${Math.round(gene[g+2]/2.55)}%`;}
   else if(t===SPONGE)s+=` · อุ้มน้ำ ${aux[i]}/12`;
   else if(t===CLONE)s+=aux[i]?` · กำลังโคลน ${NAME[aux[i]]}`:" · รอวัสดุมาแตะ";
   else if((t===WOOD||t===COAL)&&temp[i]>IGN[t])s+=" · กำลังลุกไหม้";
@@ -1313,12 +1732,14 @@ function updateReadout(){
 let fpsT=performance.now(),fpsN=0,fps=60;
 function updateMeta(){
   meta.textContent=`อนุภาค ${particles.toLocaleString("en-US")} · ${fps} fps`;
-  let mx=1;for(const id in popRows)mx=Math.max(mx,pop[id]);
-  for(const id in popRows){popRows[id].ct.textContent=pop[id];popRows[id].bar.style.width=(pop[id]/Math.max(mx,40)*100).toFixed(1)+"%";}
+  if(dayNight)meta.textContent+=daylight>.5?" · กลางวัน":" · กลางคืน";
+  updateEvoUI(false);
 }
 
 function loop(now){
   if(running){for(let s=0;s<speed;s++)step();}
+  if(frame<lastHist)lastHist=frame;
+  if(frame-lastHist>=60){lastHist=frame;for(const t of LIFE){const h=hist[t];h.copyWithin(0,1);h[HN-1]=pop[t];}histN=Math.min(HN,histN+1);}
   if(painting&&last){
     if(ST[sel]===S_LIFE&&sel<120){if(++creTick%6===0)placeCreature(last.x,last.y);}
     else paintAt(last.x,last.y);
