@@ -45,8 +45,7 @@ select:hover,.btn:hover{border-color:var(--line2)}
 .btn{display:inline-flex;align-items:center;gap:6px;line-height:1.2}
 .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600;min-width:74px;justify-content:center}
 .btn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--sel)}
-.main{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
-@media (max-width:940px){.main{grid-template-columns:minmax(0,1fr)}}
+.main{display:grid;grid-template-columns:minmax(0,1fr) clamp(290px,27vw,350px);gap:18px;align-items:stretch}
 .labcol{display:flex;flex-direction:column;gap:10px;min-width:0}
 .toolbar{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
 .group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -92,7 +91,6 @@ select:hover,.btn:hover{border-color:var(--line2)}
 .pgroup h3{margin:0 0 6px;font-size:11.5px;font-weight:600;color:var(--muted);letter-spacing:.06em;display:flex;justify-content:space-between}
 .pgroup h3 span{font-family:var(--mono);font-weight:400}
 .pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
-@media (max-width:940px){.pgrid{grid-template-columns:repeat(auto-fill,minmax(128px,1fr))}}
 .mat{font:inherit;display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--line);border-radius:5px;background:var(--panel2);cursor:pointer;font-size:13px;line-height:1.25;color:var(--ink);text-align:left;min-width:0}
 .mat:hover{border-color:var(--line2)}
 .mat[aria-pressed="true"]{border-color:var(--accent);background:var(--sel);box-shadow:inset 0 0 0 1px var(--accent)}
@@ -144,8 +142,26 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .evlog time{font-family:var(--mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
 .evlog .dot{width:7px;height:7px;border-radius:50%;align-self:center}
 .evlog .empty{display:block;color:var(--muted)}
-.below{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;align-items:start;margin-top:4px}
-@media (max-width:1100px){.below{grid-template-columns:minmax(0,1fr)}}
+.sidetabs{display:flex;gap:2px;padding:3px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.sidetabs button{font:inherit;flex:1;font-size:13px;padding:7px 6px;border:0;border-radius:6px;background:transparent;color:var(--muted);cursor:pointer}
+.sidetabs button:hover{color:var(--ink)}
+.sidetabs button[aria-selected="true"]{background:var(--panel2);color:var(--ink);font-weight:600;box-shadow:inset 0 0 0 1px var(--line2)}
+.sidebody{display:flex;flex-direction:column;gap:14px;min-height:0}
+@media (min-width:761px){
+  html,body{height:100%;overflow:hidden}
+  .app{height:100%;padding-block:14px}
+  .main{flex:1;min-height:0}
+  .labcol{min-height:0}
+  .tankwrap{flex:1;min-height:0;container-type:size;align-items:center}
+  .tank{width:min(100cqw,calc(100cqh * var(--arn,1.5714)))}
+  .side{min-height:0;overflow:hidden}
+  .sidebody{flex:1;overflow-y:auto;overscroll-behavior:contain;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
+  .sidebody>.pane{display:none}
+  .sidebody>.pane.on{display:flex}
+  .sidebody>.card.evo.on{display:block}
+  #selcard{flex:none}
+  #selcard .desc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+}
 .mo{display:none}
 .scrim{position:fixed;inset:0;background:rgba(4,8,10,.6);z-index:19}
 .dock{flex-direction:column;gap:8px}
@@ -208,7 +224,9 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   .side{position:fixed;left:0;right:0;bottom:0;max-height:76%;overflow-y:auto;z-index:20;background:var(--bg);border-top:1px solid var(--line2);border-radius:14px 14px 0 0;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));transform:translateY(105%);transition:transform .25s ease;visibility:hidden}
   .side.open{transform:none;visibility:visible}
   .side .palette{display:none}
-  .below{display:none}
+  .sidebody>.pane{display:block}
+  .sidebody>.opts{display:flex}
+  .sidebody>.palette{display:none}
   .splist{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (prefers-reduced-motion:reduce){.flash{display:none}.prow .bar i,.side{transition:none}}
@@ -298,31 +316,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <div class="tabs" id="tabs" role="tablist" aria-label="หมวดวัสดุ"></div>
         <div class="tray" id="tray"></div>
       </div>
-      <div class="below" id="below">
-      <div class="card evo" id="evo">
-        <h3 class="ch">วิวัฒนาการ <span id="evtime">เวลาจำลอง 00:00</span></h3>
-        <div class="splist" id="splist"></div>
-        <div class="spdetail">
-          <div class="sphead"><b id="spname">ปลา</b><span id="spmeta">ประชากร 0 · รุ่นสูงสุด 0</span></div>
-          <canvas id="spchart" height="64" aria-label="กราฟประชากรตามเวลา"></canvas>
-          <dl class="traits" id="traits"></dl>
-        </div>
-        <h4>เหตุการณ์วิวัฒนาการ</h4>
-        <ol class="evlog" id="evlog"></ol>
-      </div>
-      <div class="card opts" id="opts">
-        <h3 class="ch">ตัวเลือกการทดลอง</h3>
-        <div class="opt"><label for="o-amb">อุณหภูมิแวดล้อม</label><output id="o-ambv">20°C</output><input type="range" id="o-amb" min="-40" max="80" value="20"></div>
-        <div class="opt"><label for="o-sun">แสงแดด</label><output id="o-sunv">100%</output><input type="range" id="o-sun" min="0" max="200" step="10" value="100"></div>
-        <div class="opt"><label for="o-cap">ประชากรสูงสุดต่อชนิด</label><output id="o-capv">220</output><input type="range" id="o-cap" min="40" max="600" step="20" value="220"></div>
-        <div class="opt"><label for="o-heat">แท่งให้ความร้อน</label><output id="o-heatv">110°C</output><input type="range" id="o-heat" min="30" max="300" step="5" value="110"></div>
-        <div class="opt2"><label for="o-mut">อัตรากลายพันธุ์</label><select id="o-mut"><option value="0">ปิด</option><option value="0.5">ต่ำ</option><option value="1" selected>ปกติ</option><option value="2">สูง</option><option value="4">สุดขีด</option></select></div>
-        <div class="opt2"><label for="o-wx">สภาพอากาศ</label><select id="o-wx"><option value="0">ปลอดโปร่ง</option><option value="1">ฝน</option><option value="2">ฝนกรด</option><option value="3">หิมะ</option><option value="4">โปรยเมล็ดพืช</option><option value="5">ฝนอุกกาบาต</option></select></div>
-        <div class="opt2"><label for="o-day">กลางวัน–กลางคืน</label><button type="button" class="btn" id="o-day" aria-pressed="false">ปิดอยู่</button></div>
-        <div class="opt2"><label for="o-gv">มุมมองยีน</label><select id="o-gv"><option value="0">สีปกติ</option><option value="1">ทนร้อน</option><option value="2">ทนหนาว</option><option value="3">ต้านสารเคมี</option><option value="4">ปอด/เหงือก</option><option value="5">ความเร็ว</option><option value="6">สายตระกูล</option></select></div>
-        <div class="gvleg" id="gvleg" hidden><span id="gvlo">ต่ำ</span><i id="gvbar"></i><span id="gvhi">สูง</span></div>
-      </div>
-      </div>
       <p class="hint dk">คลิกหรือแตะค้างเพื่อเท · <kbd>Space</kbd> หยุด/เล่น · <kbd>T</kbd> มุมมองอุณหภูมิ · <kbd>G</kbd> สลับแรงโน้มถ่วง · <kbd>[</kbd> <kbd>]</kbd> ขนาดแปรง</p>
     </section>
 
@@ -342,7 +335,37 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <p class="desc" id="seldesc"></p>
         <dl class="facts" id="selfacts"></dl>
       </div>
-      <div class="card palette" id="palette"></div>
+      <div class="sidetabs dk" role="tablist" aria-label="แผงด้านข้าง">
+        <button type="button" role="tab" data-tab="mat" aria-selected="true">วัสดุ</button>
+        <button type="button" role="tab" data-tab="evo" aria-selected="false">วิวัฒนาการ</button>
+        <button type="button" role="tab" data-tab="opt" aria-selected="false">ตัวเลือก</button>
+      </div>
+      <div class="sidebody" id="sidebody">
+      <div class="card palette pane on" id="palette" data-pane="mat"></div>
+      <div class="card evo pane" id="evo" data-pane="evo">
+        <h3 class="ch">วิวัฒนาการ <span id="evtime">เวลาจำลอง 00:00</span></h3>
+        <div class="splist" id="splist"></div>
+        <div class="spdetail">
+          <div class="sphead"><b id="spname">ปลา</b><span id="spmeta">ประชากร 0 · รุ่นสูงสุด 0</span></div>
+          <canvas id="spchart" height="64" aria-label="กราฟประชากรตามเวลา"></canvas>
+          <dl class="traits" id="traits"></dl>
+        </div>
+        <h4>เหตุการณ์วิวัฒนาการ</h4>
+        <ol class="evlog" id="evlog"></ol>
+      </div>
+      <div class="card opts pane" id="opts" data-pane="opt">
+        <h3 class="ch">ตัวเลือกการทดลอง</h3>
+        <div class="opt"><label for="o-amb">อุณหภูมิแวดล้อม</label><output id="o-ambv">20°C</output><input type="range" id="o-amb" min="-40" max="80" value="20"></div>
+        <div class="opt"><label for="o-sun">แสงแดด</label><output id="o-sunv">100%</output><input type="range" id="o-sun" min="0" max="200" step="10" value="100"></div>
+        <div class="opt"><label for="o-cap">ประชากรสูงสุดต่อชนิด</label><output id="o-capv">220</output><input type="range" id="o-cap" min="40" max="600" step="20" value="220"></div>
+        <div class="opt"><label for="o-heat">แท่งให้ความร้อน</label><output id="o-heatv">110°C</output><input type="range" id="o-heat" min="30" max="300" step="5" value="110"></div>
+        <div class="opt2"><label for="o-mut">อัตรากลายพันธุ์</label><select id="o-mut"><option value="0">ปิด</option><option value="0.5">ต่ำ</option><option value="1" selected>ปกติ</option><option value="2">สูง</option><option value="4">สุดขีด</option></select></div>
+        <div class="opt2"><label for="o-wx">สภาพอากาศ</label><select id="o-wx"><option value="0">ปลอดโปร่ง</option><option value="1">ฝน</option><option value="2">ฝนกรด</option><option value="3">หิมะ</option><option value="4">โปรยเมล็ดพืช</option><option value="5">ฝนอุกกาบาต</option></select></div>
+        <div class="opt2"><label for="o-day">กลางวัน–กลางคืน</label><button type="button" class="btn" id="o-day" aria-pressed="false">ปิดอยู่</button></div>
+        <div class="opt2"><label for="o-gv">มุมมองยีน</label><select id="o-gv"><option value="0">สีปกติ</option><option value="1">ทนร้อน</option><option value="2">ทนหนาว</option><option value="3">ต้านสารเคมี</option><option value="4">ปอด/เหงือก</option><option value="5">ความเร็ว</option><option value="6">สายตระกูล</option></select></div>
+        <div class="gvleg" id="gvleg" hidden><span id="gvlo">ต่ำ</span><i id="gvbar"></i><span id="gvhi">สูง</span></div>
+      </div>
+      </div>
     </aside>
   </div>
   <div class="scrim" id="scrim" hidden></div>
@@ -1606,11 +1629,10 @@ function updateEvoUI(force){
     if(!evlog.length){const li=document.createElement("li");li.className="empty";li.textContent="ยังไม่มีเหตุการณ์ สิ่งมีชีวิตที่ออกลูกจะส่งต่อยีนพร้อมการกลายพันธุ์ ลองเปลี่ยนอุณหภูมิหรือเปิดฝนกรดเพื่อสร้างแรงกดดันในการคัดเลือก";evlogEl.appendChild(li);}
     for(const e of evlog){const li=document.createElement("li");const tm=document.createElement("time");tm.textContent=e.tm;const dt=document.createElement("span");dt.className="dot";dt.style.background=SPCOL[e.t];const tx=document.createElement("span");tx.textContent=e.txt;li.append(tm,dt,tx);evlogEl.appendChild(li);}}
 }
-// panels live under the tank on wide screens and in the bottom sheet on phones
-const belowEl=document.getElementById("below"),evoCard=document.getElementById("evo"),optsCard=document.getElementById("opts");
-const mqMob=window.matchMedia("(max-width:760px)");
-function placePanels(){const tgt=mqMob.matches?document.getElementById("side"):belowEl;if(evoCard.parentNode!==tgt)tgt.append(evoCard,optsCard);}
-placePanels();try{mqMob.addEventListener("change",placePanels);}catch(e){}
+// desktop side tabs
+const sideTabs=document.querySelectorAll(".sidetabs button"),panes=document.querySelectorAll("#sidebody .pane");
+function setSideTab(k){sideTabs.forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===k?"true":"false"));panes.forEach(p=>p.classList.toggle("on",p.dataset.pane===k));document.getElementById("sidebody").scrollTop=0;if(k==="evo")updateEvoUI(true);}
+sideTabs.forEach(b=>b.addEventListener("click",()=>setSideTab(b.dataset.tab)));
 // options
 const bindRange=(id,fn)=>{const el=document.getElementById(id),out=document.getElementById(id+"v");const f=()=>{out.textContent=fn(+el.value);};el.addEventListener("input",f);f();};
 bindRange("o-amb",v=>{ambient=v;return v+"°C";});
